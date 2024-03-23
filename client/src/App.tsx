@@ -1,6 +1,4 @@
 import { RouterProvider, createRouter } from '@tanstack/react-router'
-import dotenv from "dotenv"
-dotenv.config();
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
 
