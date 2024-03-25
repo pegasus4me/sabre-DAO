@@ -4,7 +4,7 @@ export const Route = createFileRoute('/')({
   component: () => (
     <>
     <p>Hello /</p>
+    
     </>
-  )
-  
+  ),
 })
