@@ -36,7 +36,7 @@
 */
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 import "../lib/openzeppelin-contracts/contracts/token/ERC20/extensions/ERC20Votes.sol";
@@ -44,13 +44,19 @@ import "../lib/openzeppelin-contracts/contracts/token/ERC20/extensions/ERC20Vote
 
 contract SabreDAO is ERC20, Ownable, ERC20Permit, ERC20Votes {
     error e_burnError();
+    error SBR_MustBeMoreThanZero();
+
+    error SBR_NotZeroAddress();
+
+    event TokenMinted(address indexed to, uint256 amount);
+    event TokenBurned(address indexed from, uint256 amount);
     ///////////////////////////////////////////////////
     //////////////////////state variable///////////////
     ///////////////////////////////////////////////////
 
-    uint256 public s_TotalSupply = 1000 ether;
+    uint256 public s_TotalSupply = 1000000 ether;
 
-    address[] public a_TokenHolders;
+    address[] public a_TokenMinter;
 
     ///////////////////////////////////////////////////
     //////////////////////CONSTRUCTOR///////////////////
@@ -60,26 +66,42 @@ contract SabreDAO is ERC20, Ownable, ERC20Permit, ERC20Votes {
     //        super._afterTokenTransfer(from, to, amount);
     //   }
 
-    function mint(address to, uint256 amount, uint256 keepPeercentage) public onlyOwner {
+    function mintToken(address to, uint256 amount, uint256 keepPeercentage) public onlyOwner {
         amount = s_TotalSupply;
         uint256 keepTeamAmount = (keepPeercentage * amount) / 100;
         _transfer(msg.sender, address(this), keepTeamAmount);
         _mint(to, amount);
-        a_TokenHolders.push(msg.sender);
+        a_TokenMinter.push(msg.sender);
     }
 
-    function _burn(address to, uint256 amount) internal override(ERC20) {
+    function _burn(address to, uint256 amount) internal override(ERC20) onlyOwner {
         if (amount < s_TotalSupply) {
             revert e_burnError();
         }
         super._burn(to, amount);
+        emit TokenBurned(to, amount);
     }
 
-    function _update(address from, address to, uint256 value) internal override(ERC20, ERC20Votes) {
+    function _mint(address to, uint256 amount) internal override(ERC20) onlyOwner {
+        if (to == address(0)) {
+            revert SBR_NotZeroAddress();
+        }
+        if (amount <= 0) {
+            revert SBR_MustBeMoreThanZero();
+        }
+        super._mint(to, amount);
+        emit TokenMinted(to, amount);
+    }
+
+    function _update(address from, address to, uint256 value) internal override(ERC20, ERC20Votes) onlyOwner {
         super._update(from, to, value);
     }
 
     function nonces(address owner) public view override(ERC20Permit, Nonces) returns (uint256) {
         return super.nonces(owner);
+    }
+
+    function mint(address to, uint256 amount) external onlyOwner {
+        _mint(to, amount);
     }
 }
