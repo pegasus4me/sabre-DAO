@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+body {
+    --gradient-background: linear-gradient(60deg , #141414 -204.56%, #000000 191.61%);
+    background: var(--gradient-background);
+    height: 100vh;
+}
+
+/* fonts */
+@font-face {
+    font-family: 'ClashGrotesk-Bold'; /*a name to be used later*/
+    src: url("../public/fonts/ClashGrotesk-Bold.woff2"); /*URL to font*/
+}
+@font-face {
+    font-family: 'ClashGrotesk-Light'; /*a name to be used later*/
+    src: url("../public/fonts/ClashGrotesk-Light.woff2"); /*URL to font*/
+}
+@font-face {
+    font-family: 'ClashGrotesk-Medium'; /*a name to be used later*/
+    src: url("../public/fonts/ClashGrotesk-Medium.woff2"); /*URL to font*/
+}
+@font-face {
+    font-family: 'ClashGrotesk-Regular'; /*a name to be used later*/
+    src: url("../public/fonts/ClashGrotesk-Regular.woff2"); /*URL to font*/
+}

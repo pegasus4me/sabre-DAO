@@ -8,11 +8,12 @@ export default function Query({children}:  {children: React.ReactNode}) : JSX.El
     return (
         <QueryClientProvider client={queryClient}>
             <ConnectKitProvider 
-             theme="soft"
+             theme="minimal"
              customTheme={{
-                 "--ck-connectbutton-background": "#423FFF",
-                // "--ck-connectbutton-border-radius:" :"16px",
-                 "--ck-connectbutton-color" : "ffffff",
+                "--ck-connectbutton-background": "#433EFF",
+                "--ck-connectbutton-border-radius:" :"16px",
+                "--ck-connectbutton-color" : "ffffff",
+                "--ck-connectbutton-box-shadow:" : "0px 0px 0px 1px #ffffff00"
                 
              }}
             >
