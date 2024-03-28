@@ -17,7 +17,7 @@ export default function Header(): JSX.Element {
         </div>
         
         
-        <div className="flex ">
+        <div className="flex">
           
           <Link
             to="/"
@@ -41,7 +41,7 @@ export default function Header(): JSX.Element {
             to="/stake"
             className=" [&.active]:text-white font-clash-reg text-[#717171] text-md text-xl p-5   border-r border-[#454545]"
           >
-            Stakes
+            Stake
           </Link>
         </div>
       </div>
