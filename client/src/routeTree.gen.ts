@@ -15,6 +15,7 @@ import { Route as StakeImport } from './routes/stake'
 import { Route as ProjectsImport } from './routes/projects'
 import { Route as DashboardImport } from './routes/dashboard'
 import { Route as IndexImport } from './routes/index'
+import { Route as ProjectsNameImport } from './routes/projects.$name'
 
 // Create/Update Routes
 
@@ -38,6 +39,11 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const ProjectsNameRoute = ProjectsNameImport.update({
+  path: '/$name',
+  getParentRoute: () => ProjectsRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -58,6 +64,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StakeImport
       parentRoute: typeof rootRoute
     }
+    '/projects/$name': {
+      preLoaderRoute: typeof ProjectsNameImport
+      parentRoute: typeof ProjectsImport
+    }
   }
 }
 
@@ -66,7 +76,7 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren([
   IndexRoute,
   DashboardRoute,
-  ProjectsRoute,
+  ProjectsRoute.addChildren([ProjectsNameRoute]),
   StakeRoute,
 ])
 
