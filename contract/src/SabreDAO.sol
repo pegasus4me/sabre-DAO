@@ -74,7 +74,7 @@ contract SabreDAO is ERC20, Ownable, ERC20Permit, ERC20Votes {
         a_TokenMinter.push(msg.sender);
     }
 
-    function _burn(address to, uint256 amount) internal override(ERC20) onlyOwner {
+    function _burn(address to, uint256 amount) internal virtual override(ERC20) onlyOwner {
         if (amount < s_TotalSupply) {
             revert e_burnError();
         }
@@ -82,7 +82,7 @@ contract SabreDAO is ERC20, Ownable, ERC20Permit, ERC20Votes {
         emit TokenBurned(to, amount);
     }
 
-    function _mint(address to, uint256 amount) internal override(ERC20) onlyOwner {
+    function _mint(address to, uint256 amount) internal virtual override(ERC20) onlyOwner {
         if (to == address(0)) {
             revert SBR_NotZeroAddress();
         }

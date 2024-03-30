@@ -1,4 +1,5 @@
-//SPDX-License-Identifier : MIT
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
 // version
 // imports
 // errors
@@ -27,9 +28,9 @@
 
 import {SabreDAO} from "../src/SabreDAO.sol";
 
-pragma solidity ^0.8.20;
 
-contract SBRStaking {
+
+contract SabreDAOStaking {
     /////////////////
     //STATE VARIBLE///
     /////////////////
@@ -94,7 +95,7 @@ contract SBRStaking {
         uint256 amountPaid = s_UserRewardPerTokenPaid[account];
         uint256 currentRewardPerToken = rewardPerToken();
         uint256 pastRewards = sm_reward[account];
-        uint256 earn = ((currentBalance * (currentRewardPerToken - pastRewards)) / 1 * 18) + pastRewards;
+        uint256 earn = ((currentBalance * (currentRewardPerToken - amountPaid))) * 1 * 18 + pastRewards;
         return earn;
     }
 
@@ -129,7 +130,7 @@ contract SBRStaking {
         } else {
             return (
                 s_rewardPerTokenStored
-                    + (((block.timestamp + s_lastUpdate) / (reward_Rate * 1 * 18))) / s_totalStakingSupply
+                    + (((block.timestamp /*+*/ - s_lastUpdate) / (reward_Rate / 1 * 18))) / s_totalStakingSupply
             );
         }
     }
