@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Svault from "./Svault.tsx";
+import Svault from "./Svault.component.tsx";
 
 
 

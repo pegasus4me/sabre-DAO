@@ -1,5 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/stake')({
-  component: () => <div>Hello /stake!</div>
+  component: Stake
 })
+
+function Stake () {
+ return (
+   <div className="text-white">Stake</div>
+ ) 
+}

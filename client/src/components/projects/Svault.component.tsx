@@ -3,7 +3,6 @@ type TSvault = {
   logo: string;
   category: string;
   name: string;
-  statut: string;
   description: string;
   price: string;
   round: string;
@@ -15,14 +14,13 @@ export default function Svault({
   logo,
   category,
   name,
-  statut,
   description,
   price,
   round,
   maxCap,
   viewMore,
 } : TSvault): JSX.Element {
-  return <article className="flex flex-col w-[500px] h-[460px] rounded-lg bg-gradient-to-b from-[#393783] to-[#0C0C1D]
+  return <article className="flex flex-col w-[500px] h-[460px] rounded-lg bg-gradient-to-b from-[#26246F] to-[#0C0C1D]
   
   ">
     <section className="flex justify-between p-6">

@@ -4,8 +4,8 @@ import App from "./App.tsx";
 import "./index.css";
 
 // web3 configs
-import Provider from "./libs/wrappers/wagmiProvider.tsx";
-import Query from "./libs/wrappers/queryClient.tsx";
+import Provider from "./lib/wrappers/wagmiProvider.tsx";
+import Query from "./lib/wrappers/queryClient.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
