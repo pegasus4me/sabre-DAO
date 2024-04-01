@@ -11,5 +11,9 @@ function filterSvaults() : void{
 
 
 export default function ProjectsComponent() {
-
+    return ( 
+        <>
+        
+        </>
+    )
 }
