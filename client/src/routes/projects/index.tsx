@@ -18,8 +18,8 @@ export default function Projects() {
   return (
     <section className="m-auto text-white mt-20">
       <div className="border-b border-[#454545]">
-        <div className="flex justify-between  max-w-[90%] mx-auto">
-          <div className="flex p-4 md:w-[40%] flex-col w-[50%]">
+        <div className="flex justify-between  w-[90%] mx-auto">
+          <div className="flex md:w-[40%] flex-col ">
             <h1 className="md:text-8xl text-5xl font-clash-med p-5 ">
               Unleash the power of Decentralized VCs
             </h1>
@@ -34,7 +34,7 @@ export default function Projects() {
               capital, empowering global participation and innovation
             </p>
           </div>
-          <div className="w-[40%]">
+          <div className="hidden md:block">
             <img src={illustration} alt="main-illustation" width={700} />
           </div>
         </div>

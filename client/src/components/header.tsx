@@ -6,8 +6,8 @@ import Marquee from "react-fast-marquee";
 export default function Header(): JSX.Element {
   return (
     <header className="border-b border-[#454545] ">
-      <div className="flex max-w-[95%] mx-auto items-center justify-between ">
-        <div className="flex gap-5 items-center">
+      <div className="flex items-center w-[95%]  m-auto justify-between">
+        <div className="flex items-center ">
           <div className="border-r  border-[#454545] p-2">
             <img src={img} alt="logo" width={150} height={45} />
           </div>
@@ -21,13 +21,13 @@ export default function Header(): JSX.Element {
             </Link>
             <Link
               to="/projects"
-              className=" [&.active]:text-white  font-clash-reg text-[#717171] text-md text-xl p-5  border-r border-[#454545]"
+              className=" [&.active]:text-white  font-clash-reg text-[#717171] text-md text-xl p-5 border-r border-[#454545]"
             >
               Projects
             </Link>{" "}
             <Link
               to="/dashboard"
-              className=" [&.active]:text-white font-clash-reg text-[#717171] text-md text-xl p-5   border-r border-[#454545]"
+              className=" [&.active]:text-white font-clash-reg text-[#717171] text-md text-xl p-5  border-r border-[#454545]"
             >
               Dashboard
             </Link>
