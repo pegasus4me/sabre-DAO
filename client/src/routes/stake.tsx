@@ -1,12 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
-import stakeWallet from "../assets/stake_wallet.svg";
+import stakeWallet from "@/assets/stake_wallet.svg";
+import spiralBg from "@/assets/spiral_bg.svg";
 import { Button, Paragraph, Title } from "@/atoms";
 import { GoArrowUpRight } from "react-icons/go";
 import { StakeForm } from "@/components/stake";
 
 function Stake() {
   return (
-    <div className="w-[90%] max-w-[1440px] mx-auto my-8 flex flex-col space-y-8">
+    <div className="relative w-[90%] max-w-[1440px] mx-auto my-8 flex flex-col space-y-8">
       <div className="flex flex-col space-y-8 md:space-y-0 md:flex-row md:justify-between">
         <div className="w-full md:w-[55%] lg:w-[40%] flex flex-col space-y-6">
           <div>
@@ -30,6 +31,12 @@ function Stake() {
           src={stakeWallet}
           alt="wallet image"
           className="hidden md:block md:w-[30%]"
+        />
+
+        <img
+          src={spiralBg}
+          alt="wallet image"
+          className="z-[-1] absolute top-0 w-full left-0"
         />
       </div>
 

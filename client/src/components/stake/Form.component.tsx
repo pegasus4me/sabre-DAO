@@ -3,33 +3,33 @@ import ethCoin from "@/assets/eth.svg";
 
 const StakeForm = () => {
   return (
-    <div className="w-full max-w-[600px] mx-auto flex flex-col space-y-4">
+    <div className="relative w-full max-w-[600px] mx-auto flex flex-col space-y-4">
       <SubTitle
         css="text-center !font-clash-regular font-light"
         text="Single stake"
       />
 
       <img src={ethCoin} className="w-[10%]" alt="eth coin" />
-      <form className="bg-gradient-to-b from-jacksonPurple to-ebony h-fit rounded-lg border border-borderLine/20 flex flex-col space-y-4 p-4">
+      <form className="bg-gradient-to-b from-jacksonPurple to-ebony h-fit rounded-lg border border-borderLine/20 flex flex-col space-y-8 p-4">
         <div className="flex flex-col space-y-4">
           <PrimaryInput
             id={"apy"}
             name={"apy"}
-            label="APY(%)"
+            label="Annual Percentage Yield (APY)"
             onChange={() => {}}
           />
 
           <PrimaryInput
-            id={"apy"}
-            name={"apy"}
-            label="APY(%)"
+            id={"tvd"}
+            name={"tvd"}
+            label="Total value deposited (TVD)"
             onChange={() => {}}
           />
 
           <PrimaryInput
-            id={"apy"}
-            name={"apy"}
-            label="APY(%)"
+            id={"ci"}
+            name={"ci"}
+            label="Current Index (CI)"
             onChange={() => {}}
           />
         </div>
