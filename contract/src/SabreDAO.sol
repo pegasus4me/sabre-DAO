@@ -55,6 +55,7 @@ contract SabreDAO is ERC20, Ownable, ERC20Permit, ERC20Votes {
     ///////////////////////////////////////////////////
 
     uint256 public s_TotalSupply = 1000000 ether;
+    uint public keepPeercentage = 20;
 
     address[] public a_TokenMinter;
 
@@ -66,11 +67,12 @@ contract SabreDAO is ERC20, Ownable, ERC20Permit, ERC20Votes {
     //        super._afterTokenTransfer(from, to, amount);
     //   }
 
-    function mintToken(address to, uint256 amount, uint256 keepPeercentage) public onlyOwner {
-        amount = s_TotalSupply;
-        uint256 keepTeamAmount = (keepPeercentage * amount) / 100;
-        _transfer(msg.sender, address(this), keepTeamAmount);
-        _mint(to, amount);
+    function mintToken() public onlyOwner {
+        uint amount = s_TotalSupply;
+        uint256 keepTeamAmount = (keepPeercentage * s_TotalSupply) / 100;
+        
+        _mint(msg.sender, amount);
+         _mint(address(this), keepTeamAmount);
         a_TokenMinter.push(msg.sender);
     }
 
