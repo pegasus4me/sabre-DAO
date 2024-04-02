@@ -10,8 +10,7 @@ import Query from "./lib/wrappers/queryClient.tsx";
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider>
-      <Query>
-        
+      <Query>    
         <App />
       </Query>
     </Provider>

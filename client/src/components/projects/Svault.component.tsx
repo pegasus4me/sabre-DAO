@@ -33,13 +33,13 @@ export default function Svault({
 
 
         <div className="mt-10">
-          <p className="text-md font-clash-light">{round}</p>
-          <p className="text-md font-clash-light">{price}</p>
+          <p className="text-md font-clash-light">Round : {round}</p>
+          <p className="text-md font-clash-light">Price :{price} usdt / {name}</p>
           <p className="text-md font-clash-light mt-5">Svault max cap : {maxCap}</p>
         </div>
     </div>
     <div className="">
-      <img src={logo} alt="logo" width={300}/>
+      <img src={logo} alt="logo" width={150}/>
     </div>
     </section>
     <div className="w-[100%]">

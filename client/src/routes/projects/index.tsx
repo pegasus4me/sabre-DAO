@@ -3,7 +3,7 @@ import illustration from "../../assets/presentation.png";
 import shadows from "../../assets/shadow.png";
 import { Link } from "@tanstack/react-router";
 import Filter from "../../components/projects/filter.component";
-import Svault from "@/components/projects/Svault.component";
+import ProjectsComponent from "@/components/projects/projects_component";
 /**
  * Renders a React component that displays "Project Page".
  *
@@ -17,7 +17,7 @@ export const Route = createFileRoute("/projects/")({
 export default function Projects() {
   return (
     <section className="m-auto text-white mt-20">
-      <div className="border-b border-[#454545]">
+      <div className="border-b border-[#272727]">
         <div className="flex justify-between  w-[90%] mx-auto">
           <div className="flex md:w-[40%] flex-col ">
             <h1 className="md:text-8xl text-5xl font-clash-med p-5 ">
@@ -26,7 +26,7 @@ export default function Projects() {
             <img
               src={shadows}
               alt="shadows"
-              className="absolute -z-10 w-[40%] top-0 left-0"
+              className="absolute -z-10  w-[40%] top-0 left-0"
               width={700}
             />
             <p className="p-5 font-clash-light text-2xl">
@@ -44,7 +44,7 @@ export default function Projects() {
           curated projects
         </h2>
         <Filter active={0} upcoming={0} passed={0} />
-      
+          <ProjectsComponent/>
       </section>
     </section>
   );

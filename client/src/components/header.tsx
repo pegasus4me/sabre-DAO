@@ -40,13 +40,13 @@ export default function Header(): JSX.Element {
           </div>
         </div>
        <div className="flex items-center gap-5">
-       <a href="https://sabredao.gitbook.io/" className="text-white text-[#717171] font-clash-med underline">docs</a>
+       <a href="https://sabredao.gitbook.io/" className=" hover:text-white text-[#717171] transition font-clash-med ">docs</a>
        <ConnectKitButton />
        </div>
        
       </div>
       <Marquee className="bg-[#F8F8F8] p-3 font-medium">
-        Celestia will be featured on Svault on 24/01/2024 after DAO vote stake
+        Sabre will be featured on Svault on 24/01/2024 after DAO vote stake
         your $SBR now to increase your purchase power
       </Marquee>
     </header>

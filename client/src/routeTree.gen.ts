@@ -15,7 +15,7 @@ import { Route as StakeImport } from './routes/stake'
 import { Route as DashboardImport } from './routes/dashboard'
 import { Route as IndexImport } from './routes/index'
 import { Route as ProjectsIndexImport } from './routes/projects/index'
-import { Route as ProjectsProjectIdImport } from './routes/projects/$projectId'
+import { Route as ProjectsSabreImport } from './routes/projects/sabre'
 
 // Create/Update Routes
 
@@ -39,8 +39,8 @@ const ProjectsIndexRoute = ProjectsIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const ProjectsProjectIdRoute = ProjectsProjectIdImport.update({
-  path: '/projects/$projectId',
+const ProjectsSabreRoute = ProjectsSabreImport.update({
+  path: '/projects/sabre',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -60,8 +60,8 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StakeImport
       parentRoute: typeof rootRoute
     }
-    '/projects/$projectId': {
-      preLoaderRoute: typeof ProjectsProjectIdImport
+    '/projects/sabre': {
+      preLoaderRoute: typeof ProjectsSabreImport
       parentRoute: typeof rootRoute
     }
     '/projects/': {
@@ -77,7 +77,7 @@ export const routeTree = rootRoute.addChildren([
   IndexRoute,
   DashboardRoute,
   StakeRoute,
-  ProjectsProjectIdRoute,
+  ProjectsSabreRoute,
   ProjectsIndexRoute,
 ])
 
