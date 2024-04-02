@@ -10,7 +10,7 @@ const StakeForm = () => {
       />
 
       <img src={ethCoin} className="w-[10%]" alt="eth coin" />
-      <form className="bg-gradient-to-b from-jacksonPurple to-ebony h-fit rounded-lg border border-borderLine/20 flex flex-col space-y-8 p-4">
+      <form className="bg-gradient-to-b from-jacksonPurple/30 to-ebony/30 h-fit rounded-lg border border-borderLine/20 flex flex-col space-y-8 p-4 backdrop-filter backdrop-blur-lg">
         <div className="flex flex-col space-y-4">
           <PrimaryInput
             id={"apy"}

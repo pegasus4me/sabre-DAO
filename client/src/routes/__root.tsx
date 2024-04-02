@@ -9,7 +9,10 @@ function Root() {
   return (
     <>
       <Header />
-      <Outlet />
+
+      <div className="my-32 w-[90%] max-w-[1440px] mx-auto">
+        <Outlet />
+      </div>
     </>
   );
 }

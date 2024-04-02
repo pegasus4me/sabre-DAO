@@ -7,7 +7,7 @@ import { StakeForm } from "@/components/stake";
 
 function Stake() {
   return (
-    <div className="relative w-[90%] max-w-[1440px] mx-auto my-8 flex flex-col space-y-8">
+    <div className="relative w-full my-8 flex flex-col space-y-8">
       <div className="flex flex-col space-y-8 md:space-y-0 md:flex-row md:justify-between">
         <div className="w-full md:w-[55%] lg:w-[40%] flex flex-col space-y-6">
           <div>
@@ -18,7 +18,7 @@ function Stake() {
             />
           </div>
 
-          <div className="w-full md:w-[45%]">
+          <div className="w-full md:w-[45%] text-center">
             <Button
               text={"Connect wallet"}
               variant={"filled"}

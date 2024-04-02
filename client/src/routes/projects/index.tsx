@@ -16,7 +16,7 @@ export const Route = createFileRoute("/projects/")({
 
 export default function Projects() {
   return (
-    <section className="w-[90%] max-w-[1440px] mx-auto my-8 flex flex-col space-y-12">
+    <section className="w-full my-8 flex flex-col space-y-12">
       <div className="border-b border-[#454545] md:py-16">
         <div className="flex flex-col space-y-12 md:space-y-0 md:flex-row md:justify-between md:items-center">
           <div className="w-full md:w-[45%] text-center md:text-left">
