@@ -1,4 +1,5 @@
-import test from "../../assets/test.png"
+import { Button, Paragraph, ProjectTag } from "@/atoms";
+
 type TSvault = {
   logo: string;
   category: string;
@@ -7,6 +8,7 @@ type TSvault = {
   price: string;
   round: string;
   maxCap: string;
+  tag: TProjectTag;
   viewMore: () => void;
 };
 
@@ -18,34 +20,39 @@ export default function Svault({
   price,
   round,
   maxCap,
+  tag,
   viewMore,
-} : TSvault): JSX.Element {
-  return <article className="flex flex-col w-[500px] h-[460px] rounded-lg bg-gradient-to-b from-[#26246F] to-[#0C0C1D]
-  
-  ">
-    <section className="flex justify-between p-6">
-    <div className="">
-        <div className="p-2">
-          <h3 className="text-5xl font-clash-reg">{name}</h3>
-          <p className="text-lg font-clash-light">{category}</p>
-        </div>
-        <p className="text-xl font-clash-reg mt-10">{description}</p>
+}: TSvault): JSX.Element {
+  return (
+    <article className="flex flex-col min-w-[300px] max-w-[460px] rounded-lg bg-gradient-to-b from-[#26246F] to-[#0C0C1D] text-white overflow-hidden">
+      <section className="flex justify-between p-6">
+        <div className="">
+          <div className="">
+            <div className="flex space-x-4 items-center">
+              <h3 className="text-5xl font-clash-reg mb-0">{name}</h3>
+              <ProjectTag tag={tag} />
+            </div>
+            <Paragraph text={category} />
+          </div>
+          <Paragraph text={description} />
 
-
-        <div className="mt-10">
-          <p className="text-md font-clash-light">{round}</p>
-          <p className="text-md font-clash-light">{price}</p>
-          <p className="text-md font-clash-light mt-5">Svault max cap : {maxCap}</p>
+          <div className="mt-10">
+            <Paragraph text={`Round: ${round}`} />
+            <Paragraph text={`Price: ${price}`} />
+            <Paragraph text={`Svault max cap: ${maxCap}`} />
+          </div>
         </div>
-    </div>
-    <div className="">
-      <img src={logo} alt="logo" width={300}/>
-    </div>
-    </section>
-    <div className="w-[100%]">
-      <button className="w-[100%] mt-5 bg-[#22214E] text-white p-3  rounded-b-lg font-clash-reg text-xl"
-      onClick={viewMore}
-      >View Now</button>
-    </div>
-  </article>;
+        <div className="">
+          <img src={logo} alt="logo" />
+        </div>
+      </section>
+
+      <Button
+        css="!rounded-none"
+        text={"View More"}
+        variant={"filled"}
+        onClick={viewMore}
+      />
+    </article>
+  );
 }

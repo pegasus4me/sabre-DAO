@@ -18,7 +18,7 @@ function Stake() {
             />
           </div>
 
-          <div className="w-full md:w-[45%] text-center">
+          <div className="w-full md:w-[45%]">
             <Button
               text={"Connect wallet"}
               variant={"filled"}

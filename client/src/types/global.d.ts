@@ -18,3 +18,5 @@ interface IInputProps extends IGeneralInputProps {
   type?: string;
   inputRef?: React.RefObject<HTMLInputElement>;
 }
+
+type TProjectTag = "Live" | "Upcoming" | "Closed";

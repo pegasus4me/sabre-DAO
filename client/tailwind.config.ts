@@ -22,6 +22,7 @@ const config = {
       borderLine: "#DEE2E9",
       errorBg: "#ffebee",
       error: "#e57373",
+      green: "#30D440"
     },
     container: {
       center: true,
