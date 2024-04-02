@@ -33,7 +33,10 @@ export default function Header(): JSX.Element {
   const [open, setOpen] = useState(false);
   const ref = useOutsideClick(() => setOpen(false));
   return (
-    <header className="border-b border-[#454545] fixed top-0 w-full left-0 bg-black/50 backdrop-filter backdrop-blur-lg z-50">
+    <header
+      ref={ref}
+      className="border-b border-[#454545] fixed top-0 w-full left-0 bg-black/50 backdrop-filter backdrop-blur-lg z-50"
+    >
       <div className="flex w-[90%] max-w-[1440px] mx-auto items-center justify-between">
         <div className="flex gap-5 items-center">
           <div className="p-2">
@@ -44,8 +47,7 @@ export default function Header(): JSX.Element {
           </div>
 
           <div
-            ref={ref}
-            className={`absolute ${open ? "left-0 opacity-100" : "-left-[1500px] opacity-0 lg:opacity-100"} transition-all duration-300 ease w-full top-[50px] bg-black/80 flex flex-col lg:static lg:flex lg:flex-row lg:bg-transparent backdrop-filter backdrop-blur-lg`}
+            className={`absolute ${open ? "left-0 opacity-100 backdrop-filter backdrop-blur-lg" : "-left-[1500px] opacity-0 lg:opacity-100"} transition-all duration-300 ease w-full top-[50px] bg-black/80 flex flex-col lg:static lg:flex lg:flex-row lg:bg-transparent`}
           >
             {routes.map((el, idx) => (
               <Link
