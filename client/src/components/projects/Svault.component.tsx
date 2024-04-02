@@ -1,4 +1,4 @@
-import test from "../../assets/test.png"
+
 type TSvault = {
   logo: string;
   category: string;
@@ -7,7 +7,7 @@ type TSvault = {
   price: string;
   round: string;
   maxCap: string;
-  viewMore: () => void;
+  viewMore: () => Promise<void>;
 };
 
 export default function Svault({
@@ -39,13 +39,13 @@ export default function Svault({
         </div>
     </div>
     <div className="">
-      <img src={logo} alt="logo" width={150}/>
+      <img src={logo} alt="logo" width={300}/>
     </div>
     </section>
     <div className="w-[100%]">
       <button className="w-[100%] mt-5 bg-[#22214E] text-white p-3  rounded-b-lg font-clash-reg text-xl"
-      onClick={viewMore}
-      >View Now</button>
+      onClick={() => viewMore()}
+      >view more</button>
     </div>
   </article>;
 }
