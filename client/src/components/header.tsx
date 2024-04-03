@@ -75,10 +75,6 @@ export default function Header(): JSX.Element {
           />
         </div>
       </div>
-      {/* <Marquee className="bg-[#F8F8F8] p-3 font-medium z-40">
-        Celestia will be featured on Svault on 24/01/2024 after DAO vote stake
-        your $SBR now to increase your purchase power
-      </Marquee> */}
     </header>
   );
 }

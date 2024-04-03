@@ -22,6 +22,7 @@ export const config = createConfig(
   
       // Required App Info
       appName: "Sabre DAO",
+      // Optional App Info
   
     }),
   );
