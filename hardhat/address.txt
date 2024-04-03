@@ -1,0 +1,3 @@
+SabreDAOToken deployed to: 0x24A48b47D22DBa20eFf4773C57F41a82DCEadcDb
+
+SabreDAOStaking deployed to: 0xD9Dc6690ebe5Cf78F27f90eB5846eF3AFe9261e8
