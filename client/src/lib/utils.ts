@@ -5,12 +5,13 @@ import { readContract } from "viem/actions";
 import { config } from "../config/config";
 import { Engine_abi as abi} from "@/config/Engine.abi";
 // eth sepolia
-export const SabreV1engineContractAddress : Hash = "0x1d734068D7a4dF7b531cdec3e740D8d00E3272dE";
+export const SabreV1engineContractAddress : Hash = "0xD9Dc6690ebe5Cf78F27f90eB5846eF3AFe9261e8";
+export const SabreDAOV1 : Hash= "0x24A48b47D22DBa20eFf4773C57F41a82DCEadcDb"
 /**
  * 
- *contract SabreDAO 0xd28DD98d6fBEA41f8928Ba62c3835a2346F513DD
-  contract helperConfig 0xC7f2Cf4845C6db0e1a1e91ED41Bcd0FcC1b0E141
- sabre engine CA 0x1d734068D7a4dF7b531cdec3e740D8d00E3272dE
+ 0: contract SabreDAO 0x24A48b47D22DBa20eFf4773C57F41a82DCEadcDb
+1: contract helperConfig 0xC7f2Cf4845C6db0e1a1e91ED41Bcd0FcC1b0E141
+2: contract SabreDAOEngine 0xD9Dc6690ebe5Cf78F27f90eB5846eF3AFe9261e8
 */
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -34,9 +35,8 @@ export async function _getSvaultsStatus([
     const contract = args[i];
     const isActive = await readContract(config, {
       abi,
-      address :SabreV1engineContractAddress,
-       functionName : "",
-       args: []
+      address :"0xD9Dc6690ebe5Cf78F27f90eB5846eF3AFe9261e8",
+      functionName : ""
 
       
     });
