@@ -20,3 +20,4 @@ interface IInputProps extends IGeneralInputProps {
 }
 
 type TProjectTag = "Live" | "Upcoming" | "Closed";
+type TierTag = "Tier 1" | "Tier 2" | "Tier 3";

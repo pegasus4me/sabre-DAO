@@ -5,7 +5,6 @@ import Filter from "../../components/projects/filter.component";
 import { SubTitle, Title } from "@/atoms";
 import ProjectsComponent from "@/components/projects/projects_component";
 import shadows from "../../assets/shadow.png";
-
 /**
  * Renders a React component that displays "Project Page".
  *

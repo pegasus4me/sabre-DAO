@@ -1,6 +1,6 @@
 import { Button, Paragraph, ProjectTag } from "@/atoms";
 
-type TSvault = {
+export interface Ivault  {
   logo: string;
   category: string;
   name: string;
@@ -22,7 +22,7 @@ export default function Svault({
   maxCap,
   tag,
   viewMore,
-}: TSvault): JSX.Element {
+}: Ivault): JSX.Element {
   return (
     <article className="flex flex-col min-w-[300px] max-w-[460px] rounded-lg bg-gradient-to-b from-[#26246F] to-[#0C0C1D] text-white overflow-hidden">
       <section className="flex justify-between p-6">

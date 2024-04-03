@@ -1,7 +1,5 @@
 export const Engine_abi = [
-    [
-        {
-           "type":"constructor",
+         {
            "inputs":[
               {
                  "name":"_proposalFee",
@@ -1042,5 +1040,4 @@ export const Engine_abi = [
               
            ]
         }
-     ]
-] as const 
+]

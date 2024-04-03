@@ -3,16 +3,39 @@ import { twMerge } from "tailwind-merge";
 // /////////////
 import { readContract } from "viem/actions";
 import { config } from "../config/config";
-import { Engine_abi as abi } from "@/config/Engine.abi";
+import { Engine_abi } from "@/config/Engine.abi";
+import { Ivault } from "@/components/projects/Svault.component";
+import { parseAbi } from 'viem'
+
 // eth sepolia
 export const SabreV1engineContractAddress: Hash = "0xD9Dc6690ebe5Cf78F27f90eB5846eF3AFe9261e8";
 export const SabreDAOV1: Hash = "0x24A48b47D22DBa20eFf4773C57F41a82DCEadcDb"
-/**
- * 
- 0: contract SabreDAO 0x24A48b47D22DBa20eFf4773C57F41a82DCEadcDb
-1: contract helperConfig 0xC7f2Cf4845C6db0e1a1e91ED41Bcd0FcC1b0E141
-2: contract SabreDAOEngine 0xD9Dc6690ebe5Cf78F27f90eB5846eF3AFe9261e8
-*/
+
+export interface IVault extends Pick<Ivault, "tag" | "price" | "round" | "maxCap">{
+    // ------ Basic informations -----
+    vesting : string,
+    raisingGoal  : number,
+    round_start : Date,
+    round_end : Date,
+    launchDate : String,
+    tag : any,
+    max_investment : number,
+    timestamp_start : number,
+    hardCap : number,
+    // -------------------------------
+    totalRaised : number,
+    sbrStaked : number,
+    totalStaked : number,
+    multipier : number,
+    deadlineDay : Date,
+    investmentPower : number,
+    inputValue : () => React.InputHTMLAttributes<HTMLInputElement>,
+    userBalance : number,
+    participantsNumber : number,
+    invest : () => void,
+}
+
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -34,7 +57,7 @@ export async function _getSvaultsStatus([
   for (let i = 0; i < args.length; i++) {
     const contract = args[i];
     const isActive = await readContract(config, {
-      abi,
+      abi :Engine_abi,
       address: "0xD9Dc6690ebe5Cf78F27f90eB5846eF3AFe9261e8",
       functionName: ""
 
