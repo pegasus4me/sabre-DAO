@@ -194,7 +194,7 @@ contract SabreDAOEngine is Ownable {
     //////////////////////CONSTRUCTOR///////////////////
     ///////////////////////////////////////////////////
     constructor(uint256 _proposalFee, uint256 _votingFee, uint256 _timePoint, uint _proposalID, address sabreDAOAddress ) Ownable(msg.sender) {
-        _proposalID = proposalID;
+        proposalID = _proposalID;
         SBRDAO_State = SabreDAO_State.open;
         proposeFee = _proposalFee;
         votingFee = _votingFee;
@@ -213,7 +213,7 @@ contract SabreDAOEngine is Ownable {
     function buy(uint256 amountToBuy) public payable {
         m_SabreDAOBuy[msg.sender] += amountToBuy;
         // sabreDAO._mint(msg.sender, amountToBuy);
-        sabreDAO.transferFrom(address(sabreDAO), msg.sender, amountToBuy);
+        sabreDAO.transferFrom(address(this), msg.sender, amountToBuy);
         a_tokenHolders.push(msg.sender);
         emit buyer(msg.sender, amountToBuy);
     }
@@ -404,21 +404,27 @@ contract SabreDAOEngine is Ownable {
         
     }
     //s_setlive
-    function setVaultStatus() public {
+    function setVaultStatus() public onlyOwner {
 
         if (Vault_State == vault_State.vault_open) {
             Vault_State == vault_State.vault_close;
         } else if (Vault_State == vault_State.vault_close) {
-            Vault_State == vault_State.vault_open;
+            Vault_State = vault_State.vault_open;
         }
         emit vaultStatusChanged(Vault_State);
-
     }
     //s_VaultGetStatus
     function getCurrentVaultStatus() public view returns ( vault_State) {
         return Vault_State;
     }
-
+    
+    function getParticipationAmount(address investor) public view returns (uint256) {
+    uint256 totalInvested = 0;
+    for (uint256 i = 1; i <= proposalID; i++) {
+        totalInvested += m_vaultsInvest[i][investor];
+    }
+    return totalInvested;
+    }
     //////////////////////////////////////////////
     ///////////STAKING functionalities///////////////////////
     /////////////////////////////////////////////

@@ -36,7 +36,7 @@
 */
 pragma solidity ^0.8.20;
 
-import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 import "../lib/openzeppelin-contracts/contracts/token/ERC20/extensions/ERC20Votes.sol";
@@ -54,7 +54,7 @@ contract SabreDAO is ERC20, Ownable, ERC20Permit, ERC20Votes {
     //////////////////////state variable///////////////
     ///////////////////////////////////////////////////
 
-    uint256 public s_TotalSupply = 1000000 ether;
+    uint256 public s_TotalSupply = 50000000000000000000 wei;
     uint public keepPeercentage = 20;
 
     address[] public a_TokenMinter;
@@ -62,19 +62,26 @@ contract SabreDAO is ERC20, Ownable, ERC20Permit, ERC20Votes {
     ///////////////////////////////////////////////////
     //////////////////////CONSTRUCTOR///////////////////
     ///////////////////////////////////////////////////
-    constructor(address initialOwner) ERC20("SabreDAO", "SBR") Ownable(initialOwner) ERC20Permit("SabreDAO") {}
-    //      function _afterTokenTransfer(address from, address to, uint256 amount) internal override(ERC20, ERC20Votes) {
-    //        super._afterTokenTransfer(from, to, amount);
-    //   }
-
-    function mintToken() public onlyOwner {
-        uint amount = s_TotalSupply;
+    constructor(address initialOwner) ERC20("SabreDAO", "SBR") Ownable(initialOwner) ERC20Permit("SabreDAO") {
+                uint amount = s_TotalSupply;
         uint256 keepTeamAmount = (keepPeercentage * s_TotalSupply) / 100;
         
         _mint(msg.sender, amount);
          _mint(address(this), keepTeamAmount);
         a_TokenMinter.push(msg.sender);
     }
+    //      function _afterTokenTransfer(address from, address to, uint256 amount) internal override(ERC20, ERC20Votes) {
+    //        super._afterTokenTransfer(from, to, amount);
+    //   }
+
+    // function mintToken() public onlyOwner {
+    //     uint amount = s_TotalSupply;
+    //     uint256 keepTeamAmount = (keepPeercentage * s_TotalSupply) / 100;
+        
+    //     _mint(msg.sender, amount);
+    //      _mint(address(this), keepTeamAmount);
+    //     a_TokenMinter.push(msg.sender);
+    // }
 
     function _burn(address to, uint256 amount) internal virtual override(ERC20) onlyOwner {
         if (amount < s_TotalSupply) {
