@@ -5,10 +5,12 @@ import { useAccount } from 'wagmi'
 
 export const Route = createFileRoute('/dashboard')({
   
-  component: () => (
-    <section className='text-white'>
-    <p>Hello /dashboard</p>
-    
-    </section>
-  ),
+  component: Dashboard,
+  
 })
+
+function Dashboard() {
+  return (
+    <div>Dashboard</div>
+  )
+}
