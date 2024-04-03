@@ -3,10 +3,10 @@ import { twMerge } from "tailwind-merge";
 // /////////////
 import { readContract } from "viem/actions";
 import { config } from "../config/config";
-import { Engine_abi as abi} from "@/config/Engine.abi";
+import { Engine_abi as abi } from "@/config/Engine.abi";
 // eth sepolia
-export const SabreV1engineContractAddress : Hash = "0xD9Dc6690ebe5Cf78F27f90eB5846eF3AFe9261e8";
-export const SabreDAOV1 : Hash= "0x24A48b47D22DBa20eFf4773C57F41a82DCEadcDb"
+export const SabreV1engineContractAddress: Hash = "0xD9Dc6690ebe5Cf78F27f90eB5846eF3AFe9261e8";
+export const SabreDAOV1: Hash = "0x24A48b47D22DBa20eFf4773C57F41a82DCEadcDb"
 /**
  * 
  0: contract SabreDAO 0x24A48b47D22DBa20eFf4773C57F41a82DCEadcDb
@@ -35,10 +35,10 @@ export async function _getSvaultsStatus([
     const contract = args[i];
     const isActive = await readContract(config, {
       abi,
-      address :"0xD9Dc6690ebe5Cf78F27f90eB5846eF3AFe9261e8",
-      functionName : ""
+      address: "0xD9Dc6690ebe5Cf78F27f90eB5846eF3AFe9261e8",
+      functionName: ""
 
-      
+
     });
 
     if (isActive) {
@@ -51,11 +51,4 @@ export async function _getSvaultsStatus([
     open: openSvaults,
     closed: closedSvaults,
   };
-
-  //  getStatus() from the contract and get back a bool for the given Svault contract
-  // we loop on the addresser
-  // if the contract is true = still open so we will push it on the openSvault list else
-  // if the contract is false = closed so it will go on the closedVaults list
-
-  // then we return the arrays of open and closed
 }

@@ -8,6 +8,7 @@ type TSvault = {
   price: string;
   round: string;
   maxCap: string;
+  tag: any;
   viewMore: () => Promise<void>;
 };
 
@@ -53,5 +54,4 @@ export default function Svault({
       />
     </article>
   );
-
 }
