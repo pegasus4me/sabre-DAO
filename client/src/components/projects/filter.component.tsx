@@ -5,9 +5,9 @@ export default function Filter({
   upcoming,
   passed,
 }: {
-  active: number;
-  upcoming: number;
-  passed: number;
+  active: number | undefined,
+  upcoming: number | undefined; 
+  passed: number |  undefined;
 }): JSX.Element {
   return (
     <section className="flex justify-start items-center flex-wrap text-white">

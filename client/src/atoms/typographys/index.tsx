@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { MdArrowOutward } from "react-icons/md";
-
+import { TProjectTag } from "@/types/global";
+import { _TierTag } from "@/types/global";
 interface ITypographyProps {
   text: string;
   css?: string;
@@ -57,7 +58,7 @@ export const ProjectTag = ({ tag }: ITagProps) => {
 };
 
 interface ITierProps {
-  tag : TierTag
+  tag : _TierTag
 }
 export const TierTag = ({ tag }: ITierProps) => {
   return (
@@ -79,11 +80,11 @@ interface ISocials {
 export const Socials = ({ website, twitter, discord, docs, tokenomics} : ISocials) => {
   return (
     <div className="flex gap-2 font-clash-med text-[#717171]">
-      <a href={website} className="flex items-center gap-1">website <MdArrowOutward /></a>
-      <a href={twitter} className="flex items-center gap-1">twitter <MdArrowOutward /></a>
-      <a href={docs} className="flex items-center gap-1">docs <MdArrowOutward /></a>
-      {tokenomics && <a href={tokenomics} className="flex items-center gap-1">tokenomics <MdArrowOutward /></a>}
-      {discord && <a href={discord} className="flex items-center gap-1">discord <MdArrowOutward /></a>}
+      <a href={website} className="flex items-center gap-1 hover:text-[#3B3A4F] hover:transition">website <MdArrowOutward /></a>
+      <a href={twitter} className="flex items-center gap-1 hover:text-[#3B3A4F] hover:transition">twitter <MdArrowOutward /></a>
+      <a href={docs} className="flex items-center gap-1 hover:text-[#3B3A4F] hover:transition">docs <MdArrowOutward /></a>
+      {tokenomics && <a href={tokenomics} className="flex items-center gap-1 hover:text-[#3B3A4F] hover:transition">tokenomics <MdArrowOutward /></a>}
+      {discord && <a href={discord} className="flex items-center gap-1 hover:text-[#3B3A4F] hover:transition">discord <MdArrowOutward /></a>}
     </div>
   )
 }

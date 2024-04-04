@@ -135,9 +135,9 @@ export function Vault({
                         <p className="text-white font-clash-reg text-sm mb-1">{participantsNumber} participants</p>
                         <p className="text-white font-clash-reg text-sm">progress {Progessvalue}%</p>
                     </div>
-                    
+
                     {/* PROGESS BAR */}
-                    <div className="h-[40px] w-full border border-borderLine/20 rounded-md p-2">
+                    <div className="h-[40px] w-full border border-borderLine/20 rounded-md p-2 rounded-lg border border-borderLine/20 flex flex-col backdrop-filter backdrop-blur-lg">
                         <div className="bg-[#423FFF]  h-full p-2 transition-all" style={{ width: `${Progessvalue}%` }}></div>
                     </div>
 

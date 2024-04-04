@@ -5,7 +5,8 @@ import sabreIcon from "@/assets/sabre_icon.svg";
 import { HiMenuAlt4 } from "react-icons/hi";
 import { useState } from "react";
 import { useOutsideClick } from "@/hooks";
-// import Marquee from "react-fast-marquee";
+import Marquee from "react-fast-marquee";
+import { MdArrowOutward } from "react-icons/md";
 
 const routes = [
   {
@@ -64,9 +65,9 @@ export default function Header(): JSX.Element {
         <div className="flex items-center gap-5">
           <a
             href="https://sabredao.gitbook.io/"
-            className="text-white text-[#717171] font-clash-med underline"
+            className="text-white text-[#717171] font-clash-med flex items-center gap-1"
           >
-            docs
+            docs <MdArrowOutward/>
           </a>
           <ConnectKitButton />
           <HiMenuAlt4
@@ -75,6 +76,12 @@ export default function Header(): JSX.Element {
           />
         </div>
       </div>
+      <Marquee
+        gradient={false}
+        className="bg-white py-2 text-white font-clash-med opacity-70"
+        >
+        <p className="text-black">sabre Dao will be featured on Sabre as a first Svault on the Fri 3 May 2024 <span className="underline">read our last medium Post</span></p>
+      </Marquee>
     </header>
   );
 }

@@ -54,7 +54,7 @@ return (
             </div>
             <section className="w-full flex flex-col space-y-6">
                 <h2 className="font-clash-reg text-4xl text-white">curated projects</h2>
-                <Filter active={0} upcoming={0} passed={0} />
+                <Filter active={1} upcoming={undefined} passed={undefined} />
                 <ProjectsComponent />
             </section>
         </section>
