@@ -11,29 +11,6 @@ import { parseAbi } from 'viem'
 export const SabreV1engineContractAddress: Hash = "0xD9Dc6690ebe5Cf78F27f90eB5846eF3AFe9261e8";
 export const SabreDAOV1: Hash = "0x24A48b47D22DBa20eFf4773C57F41a82DCEadcDb"
 
-export interface IVault extends Pick<Ivault, "tag" | "price" | "round" | "maxCap">{
-    // ------ Basic informations -----
-    vesting : string,
-    raisingGoal  : number,
-    round_start : Date,
-    round_end : Date,
-    launchDate : String,
-    tag : any,
-    max_investment : number,
-    timestamp_start : number,
-    hardCap : number,
-    // -------------------------------
-    totalRaised : number,
-    sbrStaked : number,
-    totalStaked : number,
-    multipier : number,
-    deadlineDay : Date,
-    investmentPower : number,
-    inputValue : () => React.InputHTMLAttributes<HTMLInputElement>,
-    userBalance : number,
-    participantsNumber : number,
-    invest : () => void,
-}
 
 
 export function cn(...inputs: ClassValue[]) {
@@ -74,4 +51,19 @@ export async function _getSvaultsStatus([
     open: openSvaults,
     closed: closedSvaults,
   };
+}
+
+/**
+ * Investment Power forumla ------------------------------------
+ * Investment Power = (User SBR staked / Total SBR staked) * 100
+ * -------------------------------------------------------------
+ */
+export function multiplierCalculator(tokenStakedByUser: bigint, totalTokenStaked: bigint) {
+  if(tokenStakedByUser == BigInt(0) || totalTokenStaked == BigInt(0)) return BigInt(0);
+  return (tokenStakedByUser / totalTokenStaked) * BigInt(100);
+}
+
+export function _date(timestamp : number) {
+  const _date = new Date(timestamp * 1000);
+  return String(_date).slice(0, 16)
 }

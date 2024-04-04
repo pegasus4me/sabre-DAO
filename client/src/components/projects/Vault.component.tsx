@@ -1,4 +1,4 @@
-import { IVault } from "@/lib/utils";
+import { IVault } from "@/types/global";
 import { useState, useEffect, ChangeEvent } from "react";
 import {
     Button,
@@ -15,6 +15,7 @@ import { ProgressBar } from "@/lib/contdown";
  * -------------------------------------------------------------
  */
 export function Vault({
+    name,
     price,
     round,
     vesting,
@@ -44,6 +45,7 @@ export function Vault({
     // a render is triggered and the progressbar value is updated
     // usestate is used to update the progressbar value in % 
     const [Progessvalue, setProgressValue] = useState<number | string>(0);
+    console.log(Progessvalue)
     const [countdown_, setCountdown] = useState<number[]>([]);
     const date = new Date()
 
@@ -59,13 +61,13 @@ export function Vault({
     // useEffect for ProgessBar Management
     useEffect(() => {
         // const realTimeProgress:number = ProgressBar(hardCap, totalRaised)
-        const realTimeProgress: number = ProgressBar(hardCap=0, totalRaised=0)
+        const realTimeProgress: number = ProgressBar(hardCap, totalRaised)
         setProgressValue(realTimeProgress.toPrecision(3))
         if (realTimeProgress >= 100) {
             setProgressValue(100)
         }
 
-    }, [Progessvalue])
+    }, [Progessvalue, hardCap, totalRaised])
 
     return (
         <article className="w-[%] h-[797px] rounded-md bg-gradient-to-b from-jacksonPurple/30 to-ebony/30 h-fit rounded-lg border border-borderLine/20 flex flex-col space-y-8 p-4 backdrop-filter backdrop-blur-lg">
@@ -91,23 +93,23 @@ export function Vault({
 
                 <div className="mt-1">
                     <h3 className="text-3xl font-clash-reg">{round}  Informations</h3>
-                    <div className="font-clash-light p-4 border-b border-borderLine/20">
-                        <p>Price per token : {price}</p>
+                    <div className="font-clash-reg p-4 border-b border-borderLine/20 opacity-80">
+                        <p>Price per token : {price.toLocaleString()} USDT / {name} </p>
                         <p>Vesting period : {vesting}</p>
-                        <p>{round} round raising goal {raisingGoal}</p>
+                        <p>{round} round raising goal {raisingGoal.toLocaleString()} USDT</p>
                         <p>{round}  round start : {String(round_start)}</p>
                         <p>{round}  round end : {String(round_end)}</p>
                         <p>Svault deadline day :  {String(deadlineDay)}</p>
                         <p>Launch date : {launchDate} </p>
-                        <p>max-investment : {max_investment}  </p>
-                        <p>Svault Hardcap : {hardCap} </p>
+                        <p>max-investment : {max_investment.toLocaleString()} USDT</p>
+                        <p>Svault Hardcap : {hardCap.toLocaleString()} </p>
                     </div>
                 </div>
                 <div className="mt-1 flex justify-between p-4">
                     <div>
                         <h4 className="text-2xl font-clash-reg">total Raised</h4>
                         <p className="font-clash-light text-lg">
-                            {totalRaised} / <span className="text-[#717171]">{hardCap}</span> USDT
+                            {totalRaised.toLocaleString()} / <span className="text-[#717171]">{hardCap.toLocaleString()}</span> USDT
                         </p>
                     </div>
                     <div>
@@ -124,9 +126,9 @@ export function Vault({
                         onChange={inputValue}
                         css="text-[#717171]"
                         id={""}
-                        label={`max ${investmentPower}`}
+                        label={`max ${investmentPower.toLocaleString()}`}
                         name={""} />
-                    <p className="text-[#717171] font-clash-reg text-sm text-end mt-1">balance: <span>{userBalance}</span></p>
+                    <p className="text-[#717171] font-clash-reg text-sm text-end mt-1">balance: <span>{userBalance.toLocaleString()}</span></p>
                 </div>
                 <div>
                     <div className="flex justify-between">
@@ -136,15 +138,16 @@ export function Vault({
                     
                     {/* PROGESS BAR */}
                     <div className="h-[40px] w-full border border-borderLine/20 rounded-md p-2">
-                        <div className="bg-[#423FFF]  h-full p-2" style={{ width: `${Progessvalue}%` }}></div>
+                        <div className="bg-[#423FFF]  h-full p-2 transition-all" style={{ width: `${Progessvalue}%` }}></div>
                     </div>
 
                 </div>
             </div>
             <div className="p-none">
                 <Button
+                    disabled={Progessvalue === 100 ? true : false}
                     css="bg-[#26246F] text-white rounded-none font-clash-reg text-lg bg-gradient-to-t from-[#1C1B3F]/30 to-[#22214E]/30 backdrop-filter backdrop-blur-lg"
-                    text={"Invest"}
+                    text={Progessvalue === 100 ? "Svault full" : "Invest"}
                     variant={"transparent"}
                     onClick={invest}
                 />
