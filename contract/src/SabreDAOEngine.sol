@@ -49,8 +49,9 @@ import {SabreDAOStaking} from "../src/SabreDAOStaking.sol";
 import {SabreDAOGovernorPro} from "../src/SabreDAOGovernorPro.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import {S_vault} from "../src/S_vault.sol";
+import {ISabreDAOEngine} from "../src/ISabreDAOEngine.sol";
 
-contract SabreDAOEngine is Ownable {
+contract SabreDAOEngine is Ownable, ISabreDAOEngine {
     ///////////////////////////////////////////////////
     ////////////////ERROR//////////////
     ///////////////////////////////////////////////////
@@ -63,6 +64,7 @@ contract SabreDAOEngine is Ownable {
     error invalidProposalIDError();
     error proposalExecuteError();
     error currentVaultStatusError();
+    error s_vaultTimePostError();
 
     //////////////////////////////////////
     /////////ENUM///////////////////////
@@ -99,6 +101,7 @@ contract SabreDAOEngine is Ownable {
         event ev_claimAndUnstaker(address unstaker, uint amount);
         event ev_getStakeAmount(address getStakerAmount);
     event vaultStatusChanged(vault_State newState);
+    event vaultduration (uint proposalId, uint _duration, uint amountToRefund);
 
 
     ///////////////////////////////////////////////////
@@ -110,6 +113,7 @@ contract SabreDAOEngine is Ownable {
     SabreDAO_State public SBRDAO_State;
     vote_State public Vote_State;
     vault_State  public Vault_State;
+    uint public last_TimePoint;
     S_vault public s_vault;
     /////////////////////////
     //gov state variables////
@@ -130,6 +134,7 @@ contract SabreDAOEngine is Ownable {
     mapping(uint256 => bool) public proposalExecuted;
     mapping(uint256 proposalID => mapping(address investor => uint256 investAmount)) public m_vaultsInvest;
      mapping(uint256 => uint256) public totalInvestmentAmounts;
+     mapping(uint => uint) public vaultDurations;
 
     //  mapping(uint256 proposalID => bool sucess) public m_execute;
 
@@ -171,7 +176,7 @@ contract SabreDAOEngine is Ownable {
     address[] public a_projectProposer;
     address[] private a_tokenHolders;
     uint256 public proposalID;
-    uint256 public TimePoint;
+    uint256 public TimePoint = TimePoint / 604800; //coversion to a week
 
     ////////////////////////////////////
     ///////Modifier////////////////////
@@ -319,6 +324,7 @@ contract SabreDAOEngine is Ownable {
         bytes[] memory calldatas,
         bytes32 descriptionHash
     ) internal {
+        last_TimePoint = TimePoint;
         execute(targets, values, calldatas, descriptionHash);
         cancel(targets, values, calldatas, descriptionHash);
     }
@@ -425,6 +431,42 @@ contract SabreDAOEngine is Ownable {
     }
     return totalInvested;
     }
+
+    function setVaultTimePoint_Duration(uint _proposalID, uint Duration, uint _amountToRefund) public onlyOwner {
+        if (_proposalID < proposalID) {
+            revert invalidProposalIDError();
+        }
+        if (Vault_State != vault_State.vault_open) {
+            revert currentVaultStatusError();
+        }
+        uint projectTimeLimit = TimePoint + (Duration / 604800);
+
+        if (TimePoint >= projectTimeLimit) {
+            ends_VaultInvest(_proposalID,_amountToRefund );
+        }
+        vaultDurations[_proposalID] = Duration;
+        emit vaultduration(_proposalID, Duration, _amountToRefund);
+    }
+    function getVaultDuration(uint _propposalID) public view returns(uint) {
+        return vaultDurations[_propposalID];
+    }
+    
+    function ends_VaultInvest(uint _proposalID,uint _AmountToReFund) public {
+        setVaultStatus();
+        s_vaultRefund(_proposalID, _AmountToReFund);
+
+    }
+
+
+    //     if (Vault_State != vault_State.vault_open) {
+    //         revert currentVaultStatusError();
+    //     }
+    //     CurrentTimepost = TimePoint;
+    //     if (Duration == CurrentTimepost) {
+    //         revert s_vaultTimePostError();
+    //     }
+
+    // }
     //////////////////////////////////////////////
     ///////////STAKING functionalities///////////////////////
     /////////////////////////////////////////////
@@ -461,7 +503,7 @@ contract SabreDAOEngine is Ownable {
     }
     //GVPRO
 
-    function _getBalanceAtTime(address account, uint256 timePoint) external view returns (uint256) {
+    function _getBalanceAtTime(address account, uint256 timePoint) external view virtual returns (uint256) {
         timePoint = TimePoint;
         uint256 amountAtTime = m_SabreDAOBuy[account];
         return amountAtTime;

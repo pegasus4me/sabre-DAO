@@ -48,7 +48,8 @@ import {
     TimelockController
 } from "../lib/openzeppelin-contracts/contracts/governance/extensions/GovernorTimelockControl.sol";
 import {SabreDAO} from "../src/SabreDAO.sol";
-import {SabreDAOEngine} from "../src/SabreDAOEngine.sol";
+// import {SabreDAOEngine} from "../src/SabreDAOEngine.sol";
+import {ISabreDAOEngine} from "./ISabreDAOEngine.sol";
 
 contract SabreDAOGovernorPro is 
     Governor,
@@ -62,7 +63,8 @@ contract SabreDAOGovernorPro is
     //     uint timepoint = block.timestamp;
     //     _getVotes(contractAddress, timepoint, "");
     // }
-    SabreDAOEngine public sabreDAOEngine;
+    ISabreDAOEngine public sabreDAOEngine;
+
     
 
 
@@ -70,13 +72,15 @@ contract SabreDAOGovernorPro is
     
     //  mapping(uint256 proposalID => bool sucess) public m_execute;
 
-    constructor(IVotes _token, TimelockController _timelock)
+    constructor (ISabreDAOEngine _sabreDAOEngineAddress, IVotes _token, TimelockController _timelock)
         Governor("SABREDAO TOKEN")
         GovernorSettings(1, /* 1 day */ 50400, /* 1 week */ 0)
         GovernorVotes(_token)
         GovernorVotesQuorumFraction(4)
         GovernorTimelockControl(_timelock)
-    {}
+    {
+        sabreDAOEngine = ISabreDAOEngine(_sabreDAOEngineAddress);
+    }
 
     ///////////////////////////////////////////////////
     //////////////PUBLIC AND EXTERNAL FUNCTION/////////
