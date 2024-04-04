@@ -39,9 +39,7 @@ return (
                             capital, empowering global participation and innovation
                         </p>
                     </div>
-                    <div className="hidden md:block">
-                        <img src={illustration} alt="main-illustation" width={700} />
-                    </div>
+                   
 
                     <figure className="flex justify-center items-center">
                         <img

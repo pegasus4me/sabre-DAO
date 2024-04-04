@@ -102,7 +102,7 @@ export function Vault({
                         <p>Svault deadline day :  {String(deadlineDay)}</p>
                         <p>Launch date : {launchDate} </p>
                         <p>max-investment : {max_investment.toLocaleString()} USDT</p>
-                        <p>Svault Hardcap : {hardCap.toLocaleString()} </p>
+                        <p>Svault Hardcap : {hardCap.toLocaleString()} USDT</p>
                     </div>
                 </div>
                 <div className="mt-1 flex justify-between p-4">

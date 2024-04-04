@@ -39,10 +39,20 @@ export interface IVault extends Pick<Ivault, "tag" | "price" | "round" | "maxCap
   sbrStaked : number,
   totalStaked : number,
   multipier : number,
-  deadlineDay : Date,
+  deadlineDay : string,
   investmentPower : number,
   inputValue : (e: React.ChangeEvent<HTMLInputElement>) => void,
   userBalance : number,
   participantsNumber : number,
   invest : () => Promise<void>,
+}
+
+
+export interface IProjectInvested {
+  userAddress  : `0x${string}`
+  projectName: string;
+  priceRate : number;
+  amountInvested : number;
+  NumberOfTokensGet : number;
+  isVested : boolean;
 }

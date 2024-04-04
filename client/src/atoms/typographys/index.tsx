@@ -10,7 +10,7 @@ interface ITypographyProps {
 export const Title = ({ text, css }: ITypographyProps) => {
   return (
     <h2
-      className={`font-poppins font-bold text-5xl lg:text-6xl text-white ${css}`}
+      className={`font-clash-bold font-bold text-5xl lg:text-6xl text-white ${css}`}
     >
       {text}
     </h2>

@@ -25,7 +25,7 @@ const routes = [
   },
 
   {
-    name: "Stakes",
+    name: "Stake",
     to: "/stake",
   },
 ];

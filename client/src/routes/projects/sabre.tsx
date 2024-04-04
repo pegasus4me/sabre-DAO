@@ -2,8 +2,7 @@ import { useState, useEffect, InputHTMLAttributes } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { Vault } from "@/components/projects/Vault.component";
-import { useReadContract } from "wagmi";
-import { Engine_abi as abi } from "@/config/Engine.abi";
+import { SbrStakedByUserAddress, SbrStakedTotal } from "@/lib/web3";
 import { useBalance } from "wagmi";
 import { TierTag } from "@/atoms";
 import { Socials } from "@/atoms";
@@ -21,20 +20,9 @@ function SabrePage() {
   const [value, setValue] = useState<string>("0");
   const [tokenStakedByUser, setTokenStakedByUser] = useState<bigint>(BigInt(0));
   const [totalTokenStaked, setTotalTokenStaked] = useState<bigint>(BigInt(0));
-  async function getSBRInformations(): Promise<void> {
-    try {
-
-      // get the total staked by the user
-      // get the total staked on the pool
-      // update the state
-      // send it with the function Invest
-
-    } catch (error: any) {
-
-    }
-
-  }
-
+  useEffect(() => {
+    
+  }, [])
   return (
     <section className="">
       <div className="p-5 text-white">
@@ -82,15 +70,16 @@ function SabrePage() {
             timestamp_start={1714737419}
             tag={"Live"}
             max_investment={1000}
-            hardCap={600000}
+            hardCap={800000}
             totalRaised={184560}
             sbrStaked={Number(tokenStakedByUser)}
-            totalStaked={Number(totalTokenStaked)}
+            totalStaked={Number(totalTokenStaked)} // Svault deadline day (5 days before the round end date)
             multipier={0}
             investmentPower={0}
             inputValue={(e: React.ChangeEvent<HTMLInputElement>) => {
               setValue(e.target.value);
             }}
+            deadlineDay={_date(1715498536)}
             userBalance={0}
             participantsNumber={0}
             invest={() => Invest()}
@@ -116,5 +105,3 @@ function SabrePage() {
     </section>
   )
 }
-// sabre is a test Project create for test purposes only
-// sabre is the first Svault on sabre dao
