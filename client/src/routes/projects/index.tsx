@@ -5,7 +5,6 @@ import Filter from "../../components/projects/filter.component";
 import { SubTitle, Title } from "@/atoms";
 import ProjectsComponent from "@/components/projects/projects_component";
 import shadows from "../../assets/shadow.png";
-
 /**
  * Renders a React component that displays "Project Page".
  *
@@ -40,9 +39,7 @@ return (
                             capital, empowering global participation and innovation
                         </p>
                     </div>
-                    <div className="hidden md:block">
-                        <img src={illustration} alt="main-illustation" width={700} />
-                    </div>
+                   
 
                     <figure className="flex justify-center items-center">
                         <img
@@ -55,7 +52,7 @@ return (
             </div>
             <section className="w-full flex flex-col space-y-6">
                 <h2 className="font-clash-reg text-4xl text-white">curated projects</h2>
-                <Filter active={0} upcoming={0} passed={0} />
+                <Filter active={1} upcoming={undefined} passed={undefined} />
                 <ProjectsComponent />
             </section>
         </section>

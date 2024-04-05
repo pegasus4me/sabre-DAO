@@ -1,7 +1,7 @@
-import { createConfig, http } from 'wagmi'
+import { Config, createConfig, http } from 'wagmi'
 import { arbitrumSepolia, arbitrum } from "wagmi/chains";
 import { getDefaultConfig } from "connectkit";
-
+import { Account, Chain, Client, Transport } from 'viem';
 
 export const config = createConfig(
     getDefaultConfig({
@@ -9,12 +9,10 @@ export const config = createConfig(
       chains: [arbitrumSepolia, arbitrum],
       transports: {
         // RPC URL for each chain
-        [arbitrumSepolia.id]: http(
-          `https://arbitrum-sepolia.infura.io/v3/${process.env.API_KEY}`,
+        [arbitrumSepolia.id as number]: http(
+          `${process.env.API_KEY as string}`,
         ),
-        [arbitrum.id]: http(
-          `https://arbitrum-sepolia.infura.io/v3/${process.env.API_KEY}`,
-        )
+        [arbitrum.id]: http()
       },
   
       // Required API Keys
@@ -22,7 +20,9 @@ export const config = createConfig(
   
       // Required App Info
       appName: "Sabre DAO",
-      // Optional App Info
-  
+   
+      appDescription: "Your App Description",
+      appUrl: "https://family.co", // your app's url
+      appIcon: "https://family.co/logo.png", // your app's icon, no bigger than 1024x1024px (max. 1MB)
     }),
   );

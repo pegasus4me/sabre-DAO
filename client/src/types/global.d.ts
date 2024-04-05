@@ -19,4 +19,40 @@ interface IInputProps extends IGeneralInputProps {
   inputRef?: React.RefObject<HTMLInputElement>;
 }
 
-type TProjectTag = "Live" | "Upcoming" | "Closed";
+export type TProjectTag = "Live" | "Upcoming" | "Closed";
+export type _TierTag = "Tier 1" | "Tier 2" | "Tier 3";
+
+export interface IVault extends Pick<Ivault, "tag" | "price" | "round" | "maxCap">{
+  // ------ Basic informations -----
+  name: string;
+  vesting : string,
+  raisingGoal  : number,
+  round_start : string,
+  round_end : string,
+  launchDate : string,
+  tag : any,
+  max_investment : number,
+  timestamp_start : number,
+  hardCap : number,
+  // -------------------------------
+  totalRaised : number,
+  sbrStaked : number,
+  totalStaked : number,
+  multipier : number,
+  deadlineDay : string,
+  investmentPower : number,
+  inputValue : (e: React.ChangeEvent<HTMLInputElement>) => void,
+  userBalance : number,
+  participantsNumber : number,
+  invest : () => Promise<void | string>,
+}
+
+
+export interface IProjectInvested {
+  userAddress  : `0x${string}`
+  projectName: string;
+  priceRate : number;
+  amountInvested : number;
+  NumberOfTokensGet : number;
+  isVested : boolean;
+}
