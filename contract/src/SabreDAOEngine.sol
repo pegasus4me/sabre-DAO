@@ -50,8 +50,9 @@ import {SabreDAOGovernorPro} from "../src/SabreDAOGovernorPro.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import {S_vault} from "../src/S_vault.sol";
 import {ISabreDAOEngine} from "../src/ISabreDAOEngine.sol";
+import {ReentrancyGuard} from "../lib/openzeppelin-contracts/contracts/utils/ReentrancyGuard.sol";
 
-contract SabreDAOEngine is Ownable, ISabreDAOEngine {
+contract SabreDAOEngine is Ownable, ISabreDAOEngine, ReentrancyGuard {
     ///////////////////////////////////////////////////
     ////////////////ERROR//////////////
     ///////////////////////////////////////////////////
@@ -78,6 +79,7 @@ contract SabreDAOEngine is Ownable, ISabreDAOEngine {
         _abstain, //super never vote toward the project mainly for scam prject
         _for, //in support of the project
         _against //agaist support
+
     }
     enum vault_State {
         vault_open,
@@ -88,21 +90,16 @@ contract SabreDAOEngine is Ownable, ISabreDAOEngine {
     ////////EVENT//////////////////////
     ///////////////////////////////////
     event Investment(address indexed investor, uint256 proposalID, uint256 amount);
-    event refund(address indexed refunder, uint proposalID, uint amount);
-    event buyer (address indexed buyer, uint amount);
-    event en_Proposer(address targets,
-        uint256 values,
-        bytes calldatas,
-        string description);
-    event ev_Voter(uint256 proposalId, //FOR THE VIRTUal function....note with the small id
-        uint8 support,
-        string reason);
-        event ev_stake(address staker, uint amount);
-        event ev_claimAndUnstaker(address unstaker, uint amount);
-        event ev_getStakeAmount(address getStakerAmount);
+    event refund(address indexed refunder, uint256 proposalID, uint256 amount);
+    event buyer(address indexed buyer, uint256 amount);
+    event en_Proposer(address targets, uint256 values, bytes calldatas, string description);
+    event ev_Voter( //FOR THE VIRTUal function....note with the small id
+    uint256 proposalId, uint8 support, string reason);
+    event ev_stake(address staker, uint256 amount);
+    event ev_claimAndUnstaker(address unstaker, uint256 amount);
+    event ev_getStakeAmount(address getStakerAmount);
     event vaultStatusChanged(vault_State newState);
-    event vaultduration (uint proposalId, uint _duration, uint amountToRefund);
-
+    event vaultduration(uint256 proposalId, uint256 _duration, uint256 amountToRefund);
 
     ///////////////////////////////////////////////////
     ////////////////STATEVARIABLE&MAPPING//////////////
@@ -112,8 +109,8 @@ contract SabreDAOEngine is Ownable, ISabreDAOEngine {
     SabreDAOGovernorPro public SBRDAOGovernorPro;
     SabreDAO_State public SBRDAO_State;
     vote_State public Vote_State;
-    vault_State  public Vault_State;
-    uint public last_TimePoint;
+    vault_State public Vault_State;
+    uint256 public last_TimePoint;
     S_vault public s_vault;
     /////////////////////////
     //gov state variables////
@@ -133,8 +130,8 @@ contract SabreDAOEngine is Ownable, ISabreDAOEngine {
     mapping(uint256 proposalID => Proposal) public m_executions;
     mapping(uint256 => bool) public proposalExecuted;
     mapping(uint256 proposalID => mapping(address investor => uint256 investAmount)) public m_vaultsInvest;
-     mapping(uint256 => uint256) public totalInvestmentAmounts;
-     mapping(uint => uint) public vaultDurations;
+    mapping(uint256 => uint256) public totalInvestmentAmounts;
+    mapping(uint256 => uint256) public vaultDurations;
 
     //  mapping(uint256 proposalID => bool sucess) public m_execute;
 
@@ -183,7 +180,7 @@ contract SabreDAOEngine is Ownable, ISabreDAOEngine {
     //////////////////////////////////
     modifier onlyHolders(address holders) {
         bool isHolder = false;
-        for (uint256 i = 0; i < a_tokenHolders.length; i++) {
+        for (uint256 i = 0; i < a_tokenHolders.length; ++i) {
             if (a_tokenHolders[i] == holders) {
                 isHolder = true;
                 break;
@@ -198,7 +195,13 @@ contract SabreDAOEngine is Ownable, ISabreDAOEngine {
     ///////////////////////////////////////////////////
     //////////////////////CONSTRUCTOR///////////////////
     ///////////////////////////////////////////////////
-    constructor(uint256 _proposalFee, uint256 _votingFee, uint256 _timePoint, uint _proposalID, address sabreDAOAddress ) Ownable(msg.sender) {
+    constructor(
+        uint256 _proposalFee,
+        uint256 _votingFee,
+        uint256 _timePoint,
+        uint256 _proposalID,
+        address sabreDAOAddress
+    ) Ownable(msg.sender) {
         proposalID = _proposalID;
         SBRDAO_State = SabreDAO_State.open;
         proposeFee = _proposalFee;
@@ -281,7 +284,6 @@ contract SabreDAOEngine is Ownable, ISabreDAOEngine {
         }
         m_votes[proposalID] = newVotes;
         emit ev_Voter(proposalId, support, reason);
-
     }
 
     function execute(
@@ -335,7 +337,7 @@ contract SabreDAOEngine is Ownable, ISabreDAOEngine {
     // CreateS_Vault
     function returnS_vaultProposalAndVoteData() public view returns (proposeAndVoteData[] memory) {
         proposeAndVoteData[] memory allData = new proposeAndVoteData[](proposalID);
-        for (uint256 i = 1; i <= proposalID; i++) {
+        for (uint256 i = 1; i <= proposalID; ++i) {
             Proposal memory proposal = m_Proposals[i];
             Votes memory votee = m_votes[i];
             allData[i - 1] = proposeAndVoteData({
@@ -369,7 +371,8 @@ contract SabreDAOEngine is Ownable, ISabreDAOEngine {
         emit Investment(msg.sender, proposalID, AmountToInvest);
     }
     //s_vaultTransferFund
-    function s_vaultTransferFundToTarget(uint _proposalID) public onlyOwner {
+
+    function s_vaultTransferFundToTarget(uint256 _proposalID) public onlyOwner {
         if (m_Proposals[_proposalID]._targets.length == 0) {
             revert invalidProposalIDError();
         }
@@ -381,17 +384,13 @@ contract SabreDAOEngine is Ownable, ISabreDAOEngine {
             revert("Fund-raising goal not met.");
         }
         //transfere funds to the target addresses
-        for (uint i = 0; i< m_Proposals[_proposalID]._targets.length; i++) {
+        for (uint256 i = 0; i < m_Proposals[_proposalID]._targets.length; ++i) {
             address target = m_Proposals[_proposalID]._targets[i];
-            uint amount = m_Proposals[_proposalID]._values[i];
+            uint256 amount = m_Proposals[_proposalID]._values[i];
             sabreDAO.transferFrom(address(s_vault), target, amount);
         }
-
-        
-
-
     }
-     
+
     //s_vaultReFund
     function s_vaultRefund(uint256 _proposalID, uint256 _AmountToReFund) public payable {
         if (_proposalID < proposalID) {
@@ -399,19 +398,18 @@ contract SabreDAOEngine is Ownable, ISabreDAOEngine {
         }
         m_vaultsInvest[proposalID][msg.sender] -= _AmountToReFund;
 
-        s_vault.withdraw( _AmountToReFund); 
+        s_vault.withdraw(_AmountToReFund);
         emit refund(msg.sender, proposalID, _AmountToReFund);
     }
 
     //s_VaultAllUsersInvestment
-    function returnUSERPROFILE(uint _proposalID, address user) public view returns(uint) {
-        uint investedAmount = m_vaultsInvest[_proposalID][user];
+    function returnUSERPROFILE(uint256 _proposalID, address user) public view returns (uint256) {
+        uint256 investedAmount = m_vaultsInvest[_proposalID][user];
         return investedAmount;
-        
     }
     //s_setlive
-    function setVaultStatus() public onlyOwner {
 
+    function setVaultStatus() public onlyOwner {
         if (Vault_State == vault_State.vault_open) {
             Vault_State == vault_State.vault_close;
         } else if (Vault_State == vault_State.vault_close) {
@@ -420,43 +418,46 @@ contract SabreDAOEngine is Ownable, ISabreDAOEngine {
         emit vaultStatusChanged(Vault_State);
     }
     //s_VaultGetStatus
-    function getCurrentVaultStatus() public view returns ( vault_State) {
+
+    function getCurrentVaultStatus() public view returns (vault_State) {
         return Vault_State;
     }
-    
+
     function getParticipationAmount(address investor) public view returns (uint256) {
-    uint256 totalInvested = 0;
-    for (uint256 i = 1; i <= proposalID; i++) {
-        totalInvested += m_vaultsInvest[i][investor];
-    }
-    return totalInvested;
+        uint256 totalInvested = 0;
+        for (uint256 i = 1; i <= proposalID; ++i) {
+            totalInvested += m_vaultsInvest[i][investor];
+        }
+        return totalInvested;
     }
 
-    function setVaultTimePoint_Duration(uint _proposalID, uint Duration, uint _amountToRefund) public onlyOwner {
+    function setVaultTimePoint_Duration(uint256 _proposalID, uint256 Duration, uint256 _amountToRefund)
+        public
+        onlyOwner
+    {
         if (_proposalID < proposalID) {
             revert invalidProposalIDError();
         }
         if (Vault_State != vault_State.vault_open) {
             revert currentVaultStatusError();
         }
-        uint projectTimeLimit = TimePoint + (Duration / 604800);
+        uint256 projectTimeLimit = TimePoint + (Duration / 604800);
 
         if (TimePoint >= projectTimeLimit) {
-            ends_VaultInvest(_proposalID,_amountToRefund );
+            ends_VaultInvest(_proposalID, _amountToRefund);
         }
         vaultDurations[_proposalID] = Duration;
         emit vaultduration(_proposalID, Duration, _amountToRefund);
     }
-    function getVaultDuration(uint _propposalID) public view returns(uint) {
+
+    function getVaultDuration(uint256 _propposalID) public view returns (uint256) {
         return vaultDurations[_propposalID];
     }
-    
-    function ends_VaultInvest(uint _proposalID,uint _AmountToReFund) public {
+
+    function ends_VaultInvest(uint256 _proposalID, uint256 _AmountToReFund) public {
         setVaultStatus();
         s_vaultRefund(_proposalID, _AmountToReFund);
-
     }
-
 
     //     if (Vault_State != vault_State.vault_open) {
     //         revert currentVaultStatusError();
@@ -476,7 +477,6 @@ contract SabreDAOEngine is Ownable, ISabreDAOEngine {
     function stake(uint256 amount) public onlyHolders(msg.sender) {
         SBRSStaking._stake(amount);
         emit ev_stake(msg.sender, amount);
-
     }
 
     function unStake(uint256 amount) public {
@@ -493,13 +493,13 @@ contract SabreDAOEngine is Ownable, ISabreDAOEngine {
         uint256 votingPower = SBRDAOGovernorPro.getvote();
         votingPower = votingPower + (votingPower / 4);
         emit ev_claimAndUnstaker(msg.sender, amountToUnstake);
-
     }
 
     function getStakeAmount(address staker) public view returns (uint256) {
         return SBRSStaking._getStake(staker);
-        
-
+    }
+    function getTotalStakedAmount () public view returns (uint256) {
+        return SBRSStaking._getTotalStakedAmount();
     }
     //GVPRO
 

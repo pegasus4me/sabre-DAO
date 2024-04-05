@@ -46,7 +46,7 @@ deployToken:
 	@forge script script/deploySabreDAO.s.sol:deploySabreDAO $(NETWORK_ARGS)
 
 deployEngine:
-	@forge script script/deploySareDAOEngine.s.sol:deploySareDAOEngine $(NETWORK_ARGS)
+	@forge script script/deploySareDAOEngine.s.sol:deploySabreDAOEngine $(NETWORK_ARGS)
 
 Interactions:
 	@forge script script/interaction.s.sol:interaction $(NETWORK_ARGS)

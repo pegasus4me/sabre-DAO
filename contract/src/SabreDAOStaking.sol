@@ -28,8 +28,6 @@ pragma solidity ^0.8.20;
 
 import {SabreDAO} from "../src/SabreDAO.sol";
 
-
-
 contract SabreDAOStaking {
     /////////////////
     //STATE VARIBLE///
@@ -38,6 +36,7 @@ contract SabreDAOStaking {
     uint256 public s_totalStakingSupply;
     uint256 public s_totalStakeableSupply;
     uint256 public s_rewardPerTokenStored;
+    address[] public stakers;
 
     uint256 public reward_Rate = 100;
     uint256 public s_lastUpdate;
@@ -87,6 +86,8 @@ contract SabreDAOStaking {
         if (!sucess) {
             revert e_StakingError();
         }
+        stakers.push(msg.sender);
+
     }
     //f-earned
 
@@ -95,7 +96,7 @@ contract SabreDAOStaking {
         uint256 amountPaid = s_UserRewardPerTokenPaid[account];
         uint256 currentRewardPerToken = rewardPerToken();
         uint256 pastRewards = sm_reward[account];
-        uint256 earn = ((currentBalance * (currentRewardPerToken - amountPaid))) * 1 * 18 + pastRewards;
+        uint256 earn = ((currentBalance * ((currentRewardPerToken - amountPaid))) * 1 * 18) + pastRewards;
         return earn;
     }
 
@@ -137,5 +138,13 @@ contract SabreDAOStaking {
 
     function _getStake(address staker) external view returns (uint256) {
         return sm_balance[staker];
+    }
+    function _getTotalStakedAmount() external view returns (uint256) {
+        uint totalStaked = s_totalStakingSupply;
+        for (uint i = 0; i < stakers.length; i++) {
+            totalStaked += sm_balance[stakers[i]];
+        }
+        
+        return s_totalStakingSupply ;
     }
 }

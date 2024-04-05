@@ -1,12 +1,14 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
+
 import {SabreDAOEngine} from "../src/SabreDAOEngine.sol";
 import {SabreDAO} from "../src/SabreDAO.sol";
+
 contract S_vault {
     SabreDAOEngine public SBRDAOEngine;
 
     // mapping ()
-        // CreateS_Vault
+    // CreateS_Vault
     //s_vaultInvest
 
     //s_vaultTransferFund
@@ -18,9 +20,8 @@ contract S_vault {
     /////////////////////
     // CreateS_Vault/////
     ////////////////////
-    event ev_Depositor(uint amount);
-    event ev_Withdrawer(uint amount);
-
+    event ev_Depositor(uint256 amount);
+    event ev_Withdrawer(uint256 amount);
 
     // The SabreDAO token contract address
     address public sabreDAOAddress;
@@ -45,7 +46,6 @@ contract S_vault {
         // Transfer tokens from this contract to the sender
         require(sabreDAO.transfer(msg.sender, amount), "Transfer failed");
         emit ev_Withdrawer(amount);
-
     }
 
     // Function to get the balance of SabreDAO tokens in the contract
@@ -53,5 +53,3 @@ contract S_vault {
         return sabreDAO.balanceOf(address(this));
     }
 }
-    
-

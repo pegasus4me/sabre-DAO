@@ -34,8 +34,6 @@ pragma solidity ^0.8.20;
  * @notice
 */
 
-
-
 import {Governor, IGovernor} from "../lib/openzeppelin-contracts/contracts/governance/Governor.sol";
 import {GovernorSettings} from "../lib/openzeppelin-contracts/contracts/governance/extensions/GovernorSettings.sol";
 import {GovernorCountingSimple} from
@@ -51,7 +49,7 @@ import {SabreDAO} from "../src/SabreDAO.sol";
 // import {SabreDAOEngine} from "../src/SabreDAOEngine.sol";
 import {ISabreDAOEngine} from "./ISabreDAOEngine.sol";
 
-contract SabreDAOGovernorPro is 
+contract SabreDAOGovernorPro is
     Governor,
     GovernorSettings,
     GovernorCountingSimple,
@@ -65,14 +63,9 @@ contract SabreDAOGovernorPro is
     // }
     ISabreDAOEngine public sabreDAOEngine;
 
-    
-
-
-
-    
     //  mapping(uint256 proposalID => bool sucess) public m_execute;
 
-    constructor (ISabreDAOEngine _sabreDAOEngineAddress, IVotes _token, TimelockController _timelock)
+    constructor(ISabreDAOEngine _sabreDAOEngineAddress, IVotes _token, TimelockController _timelock)
         Governor("SABREDAO TOKEN")
         GovernorSettings(1, /* 1 day */ 50400, /* 1 week */ 0)
         GovernorVotes(_token)
@@ -145,14 +138,14 @@ contract SabreDAOGovernorPro is
     ) internal override(Governor, GovernorTimelockControl) {
         Governor._executeOperations(proposalId, targets, values, calldatas, descriptionHash);
     }
+
     function execute(
         address[] memory targets,
         uint256[] memory values,
         bytes[] memory calldatas,
         bytes32 descriptionHash
     ) public payable override returns (uint256) {
-       return super.execute(targets,values,calldatas,descriptionHash);
-
+        return super.execute(targets, values, calldatas, descriptionHash);
     }
 
     function _cancel(
@@ -163,6 +156,7 @@ contract SabreDAOGovernorPro is
     ) internal override(Governor, GovernorTimelockControl) returns (uint256) {
         return super._cancel(targets, values, calldatas, descriptionHash);
     }
+
     function cancel(
         address[] memory targets,
         uint256[] memory values,
@@ -245,7 +239,6 @@ contract SabreDAOGovernorPro is
 
     function getBalanceAtTime(address account, uint256 timepoint) internal view virtual returns (uint256) {
         return sabreDAOEngine._getBalanceAtTime(account, timepoint);
-         
     }
 
     function getvote() external view returns (uint256) {
