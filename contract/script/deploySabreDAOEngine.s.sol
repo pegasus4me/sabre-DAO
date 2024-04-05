@@ -8,6 +8,7 @@ import {SabreDAOEngine} from "../src/SabreDAOEngine.sol";
 import {TimeLock} from "../src/TimeLock.sol";
 import {SabreDAO} from "../src/SabreDAO.sol";
 import {S_vault} from "../src/S_vault.sol";
+import {SabreDAOStaking} from "../src/SabreDAOStaking.sol";
 
 contract deploySabreDAOEngine is Script {
     address[] public proposer;
@@ -26,14 +27,17 @@ contract deploySabreDAOEngine is Script {
 
         SabreDAO SBRToken = new SabreDAO(msg.sender);
         S_vault SBRVault = new S_vault(address(SBRToken));
-
+        
+        // SabreDAOStaking SBRStaking = new SabreDAOStaking();
         SabreDAOEngine SBREngine =
             new SabreDAOEngine(_proposalFee, _votingFee, _timePoint, _proposalID, address(SBRToken));
         TimeLock timeLock = new TimeLock(30, proposer, proposer);
+
 
         // SBRToken.mintToken();
         SBRToken.transferOwnership(address(SBREngine));
         vm.stopBroadcast();
         return (SBRToken, HelperConfig, SBREngine, SBRVault, timeLock);
+
     }
 }

@@ -36,7 +36,6 @@ contract SabreDAOStaking {
     uint256 public s_totalStakingSupply;
     uint256 public s_totalStakeableSupply;
     uint256 public s_rewardPerTokenStored;
-    address[] public stakers;
 
     uint256 public reward_Rate = 100;
     uint256 public s_lastUpdate;
@@ -48,6 +47,7 @@ contract SabreDAOStaking {
 
     mapping(address user => uint256 amount) public sm_reward;
     ////////////
+
     //error///
     /////////
 
@@ -74,20 +74,21 @@ contract SabreDAOStaking {
         s_UserRewardPerTokenPaid[account] = s_rewardPerTokenStored;
         _;
     }
+    constructor (address _SabreDAOAddress) {
+        sabreDAO = SabreDAO(_SabreDAOAddress);
+    }
 
     ////////////
     //function//
     ////////////
     //f-stake
-    function _stake(uint256 amountToStake) external virtual updateReward(msg.sender) moreThanZero(amountToStake) {
+    function _stake(uint256 amountToStake) public updateReward(msg.sender) moreThanZero(amountToStake) {
         sm_balance[msg.sender] += amountToStake;
         s_totalStakeableSupply += amountToStake;
-        bool sucess = sabreDAO.transferFrom((msg.sender), address(this), amountToStake);
+        bool sucess = sabreDAO.transferFrom((msg.sender), address(sabreDAO), amountToStake);
         if (!sucess) {
             revert e_StakingError();
         }
-        stakers.push(msg.sender);
-
     }
     //f-earned
 
@@ -96,7 +97,7 @@ contract SabreDAOStaking {
         uint256 amountPaid = s_UserRewardPerTokenPaid[account];
         uint256 currentRewardPerToken = rewardPerToken();
         uint256 pastRewards = sm_reward[account];
-        uint256 earn = ((currentBalance * ((currentRewardPerToken - amountPaid))) * 1 * 18) + pastRewards;
+        uint256 earn = ((currentBalance * (currentRewardPerToken - amountPaid))) * 1 * 18 + pastRewards;
         return earn;
     }
 
@@ -104,7 +105,7 @@ contract SabreDAOStaking {
     function _unStake(uint256 amountToUnstake) public virtual updateReward(msg.sender) {
         sm_balance[msg.sender] -= amountToUnstake;
         s_totalStakeableSupply -= amountToUnstake;
-        bool sucess = sabreDAO.transfer(msg.sender, amountToUnstake);
+        bool sucess = sabreDAO.transferFrom(address(sabreDAO), msg.sender, amountToUnstake);
         if (!sucess) {
             revert e_unStakingError();
         }
@@ -113,13 +114,19 @@ contract SabreDAOStaking {
     //f claimReward
     function _claimReward() public virtual updateReward(msg.sender) {
         uint256 Reward = sm_reward[msg.sender];
-        bool success = sabreDAO.transfer(msg.sender, Reward);
+        bool success = sabreDAO.transferFrom(address(sabreDAO),msg.sender, Reward);
         if (!success) {
             revert e_rewardClaimError();
         }
     }
 
     function _claimAndUnstake(uint256 amountToUnstake) public {
+        /**
+         * @audit-qa Reentrancy, just change the order of the instructions to:
+         *           _unStake(amountToUnstake);
+         *           _claimReward();
+         *           and add the OZ ReentrancyGuard
+         */
         _claimReward();
         _unStake(amountToUnstake);
     }
@@ -140,11 +147,7 @@ contract SabreDAOStaking {
         return sm_balance[staker];
     }
     function _getTotalStakedAmount() external view returns (uint256) {
-        uint totalStaked = s_totalStakingSupply;
-        for (uint i = 0; i < stakers.length; i++) {
-            totalStaked += sm_balance[stakers[i]];
-        }
-        
-        return s_totalStakingSupply ;
+        return s_totalStakeableSupply;
     }
+
 }
