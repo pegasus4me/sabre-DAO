@@ -45,7 +45,6 @@ export function Vault({
     // a render is triggered and the progressbar value is updated
     // usestate is used to update the progressbar value in % 
     const [Progessvalue, setProgressValue] = useState<number | string>(0);
-    console.log(Progessvalue)
     const [countdown_, setCountdown] = useState<number[]>([]);
     const date = new Date()
 
@@ -94,22 +93,22 @@ export function Vault({
                 <div className="mt-1">
                     <h3 className="text-3xl font-clash-reg">{round}  Informations</h3>
                     <div className="font-clash-reg p-4 border-b border-borderLine/20 opacity-80">
-                        <p>Price per token : {price.toLocaleString()} USDT / {name} </p>
+                        <p>Price per token : {price.toLocaleString()} USDC / {name} </p>
                         <p>Vesting period : {vesting}</p>
-                        <p>{round} round raising goal {raisingGoal.toLocaleString()} USDT</p>
+                        <p>{round} round raising goal {raisingGoal.toLocaleString()} USDC</p>
                         <p>{round}  round start : {String(round_start)}</p>
                         <p>{round}  round end : {String(round_end)}</p>
                         <p>Svault deadline day :  {String(deadlineDay)}</p>
                         <p>Launch date : {launchDate} </p>
-                        <p>max-investment : {max_investment.toLocaleString()} USDT</p>
-                        <p>Svault Hardcap : {hardCap.toLocaleString()} USDT</p>
+                        <p>max-investment : {max_investment.toLocaleString()} USDC</p>
+                        <p>Svault Hardcap : {hardCap.toLocaleString()} USDC</p>
                     </div>
                 </div>
                 <div className="mt-1 flex justify-between p-4">
                     <div>
                         <h4 className="text-2xl font-clash-reg">total Raised</h4>
                         <p className="font-clash-light text-lg">
-                            {totalRaised.toLocaleString()} / <span className="text-[#717171]">{hardCap.toLocaleString()}</span> USDT
+                            {totalRaised.toLocaleString()} / <span className="text-[#717171]">{hardCap.toLocaleString()}</span> USDC
                         </p>
                     </div>
                     <div>

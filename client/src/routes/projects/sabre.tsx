@@ -2,14 +2,20 @@ import { useState, useEffect, InputHTMLAttributes } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { Vault } from "@/components/projects/Vault.component";
-import { SbrStakedByUserAddress, SbrStakedTotal } from "@/lib/web3";
-import { useBalance } from "wagmi";
+import { SbrStakedByUserAddress, SbrStakedTotal, maxPurchase, Participants } from "@/lib/web3";
+import { useAccount } from "wagmi";
 import { TierTag } from "@/atoms";
 import { Socials } from "@/atoms";
 import logo from "../../assets/Svault_logo.svg";
 import { Invest } from "@/lib/web3";
 import { _date } from "@/lib/utils";
-import shadow from "../../assets/shadow.png"
+import shadow from "../../assets/shadow.png";
+import {abi} from "@/config/abi"
+import { useBalance } from "wagmi";
+import { getBlockTransactionCount } from '@wagmi/core'
+import { config } from "@/config/config";
+
+const USDC_TESTNET_ADDRESS = "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d"
 
 export const Route = createFileRoute("/projects/sabre")({
   component: SabrePage,
@@ -17,12 +23,51 @@ export const Route = createFileRoute("/projects/sabre")({
 
 
 function SabrePage() {
+  
   const [value, setValue] = useState<string>("0");
   const [tokenStakedByUser, setTokenStakedByUser] = useState<bigint>(BigInt(0));
   const [totalTokenStaked, setTotalTokenStaked] = useState<bigint>(BigInt(0));
+  const {address} = useAccount()
+  const purchase_amount:bigint = maxPurchase(tokenStakedByUser, totalTokenStaked)
+  
+
+  async function getTransactions() {
+    const blockTransactionCount = await getBlockTransactionCount(config)
+    console.log("dd",blockTransactionCount)
+  }
+  getTransactions()
+  // get USDC tokens balance on the user Address
+  const USDT_BALANCE = useBalance({
+    address  : address as `0x${string}`,
+    token : USDC_TESTNET_ADDRESS as `0x${string}`
+  })
+  
+  // get USDC tokens balance Raided 
+  const SM_USDC_BALANCE = useBalance({
+    address  : "0x814b58712ba7B2fC356B1dcC71193c651BC02476" as `0x${string}`,
+    token : USDC_TESTNET_ADDRESS as `0x${string}`
+  })
+
+
+  async function bob() {
+    const toto = await SbrStakedByUserAddress(address as `0x${string}`)
+    // console.log("seds",salut_c_moi)
+    console.log("ss",toto)
+
+  }   
+  
+  bob()
+ 
+
+
   useEffect(() => {
-    
+    // setTokenStakedByUser(tokensStaked?.[0] as bigint);
+
+    // update Raised Balance each time there are a new investment 
+    //getRaisedBalance()
+      
   }, [])
+
   return (
     <section className="">
       <div className="p-5 text-white">
@@ -71,18 +116,18 @@ function SabrePage() {
             tag={"Live"}
             max_investment={1000}
             hardCap={800000}
-            totalRaised={184560}
+            totalRaised={Number(SM_USDC_BALANCE.data?.formatted)}
             sbrStaked={Number(tokenStakedByUser)}
             totalStaked={Number(totalTokenStaked)} // Svault deadline day (5 days before the round end date)
             multipier={0}
-            investmentPower={0}
+            investmentPower={Number(purchase_amount)}
             inputValue={(e: React.ChangeEvent<HTMLInputElement>) => {
               setValue(e.target.value);
             }}
             deadlineDay={_date(1715498536)}
-            userBalance={0}
+            userBalance={Number(USDT_BALANCE.data?.formatted)}
             participantsNumber={0}
-            invest={() => Invest()}
+            invest={() => Invest(BigInt(value), BigInt(0), tokenStakedByUser, totalTokenStaked)}
             price={"0.013"}
             round={"Private"}
             maxCap={""}

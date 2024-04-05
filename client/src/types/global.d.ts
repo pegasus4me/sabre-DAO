@@ -44,7 +44,7 @@ export interface IVault extends Pick<Ivault, "tag" | "price" | "round" | "maxCap
   inputValue : (e: React.ChangeEvent<HTMLInputElement>) => void,
   userBalance : number,
   participantsNumber : number,
-  invest : () => Promise<void>,
+  invest : () => Promise<void | string>,
 }
 
 

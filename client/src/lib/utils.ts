@@ -1,16 +1,15 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 // /////////////
-import { readContract } from "viem/actions";
+import { writeContract, readContract } from "@wagmi/core";
 import { config } from "../config/config";
-import { Engine_abi } from "@/config/Engine.abi";
+import { abi } from "@/config/abi";
 import { Ivault } from "@/components/projects/Svault.component";
 import { parseAbi } from 'viem'
 
 // eth sepolia
-export const SabreV1engineContractAddress: Hash = "0xD9Dc6690ebe5Cf78F27f90eB5846eF3AFe9261e8";
-export const SabreDAOV1: Hash = "0x24A48b47D22DBa20eFf4773C57F41a82DCEadcDb"
-
+const SabreEngineV1: `0x${string}` ="0x814b58712ba7B2fC356B1dcC71193c651BC02476";
+// export const SabreDAOV1: Hash = "0x24A48b47D22DBa20eFf4773C57F41a82DCEadcDb"
 
 
 export function cn(...inputs: ClassValue[]) {
@@ -20,38 +19,38 @@ export function cn(...inputs: ClassValue[]) {
 // function get Active / unactive / passed Svaults
 
 export type Hash = `0x${string}`;
-type ResultData = {
-  open: Hash[] | string[] | undefined;
-  closed: Hash[] | string[] | undefined;
-};
-export async function _getSvaultsStatus([
-  ...args
-]: `0x${string}`): Promise<ResultData> {
-  const openSvaults = [];
-  const closedSvaults = [];
+// type ResultData = {
+//   open: Hash[] | string[] | undefined;
+//   closed: Hash[] | string[] | undefined;
+// };
+// export async function _getSvaultsStatus([
+//   ...args
+// ]: `0x${string}`): Promise<ResultData> {
+//   const openSvaults = [];
+//   const closedSvaults = [];
 
-  // args = addresses
-  for (let i = 0; i < args.length; i++) {
-    const contract = args[i];
-    const isActive = await readContract(config, {
-      abi :Engine_abi,
-      address: "0xD9Dc6690ebe5Cf78F27f90eB5846eF3AFe9261e8",
-      functionName: ""
+//   // args = addresses
+//   for (let i = 0; i < args.length; i++) {
+//     const contract = args[i];
+//     const isActive = await readContract(config, {
+//       abi :abi,
+//       address: SabreEngineV1,
+//       functionName: ""
 
 
-    });
+//     });
 
-    if (isActive) {
-      openSvaults.push(contract);
-    } else {
-      closedSvaults.push(contract);
-    }
-  }
-  return {
-    open: openSvaults,
-    closed: closedSvaults,
-  };
-}
+//     if (isActive) {
+//       openSvaults.push(contract);
+//     } else {
+//       closedSvaults.push(contract);
+//     }
+//   }
+//   return {
+//     open: openSvaults,
+//     closed: closedSvaults,
+//   };
+// }
 
 /**
  * Investment Power forumla ------------------------------------
