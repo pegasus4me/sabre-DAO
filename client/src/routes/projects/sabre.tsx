@@ -106,6 +106,7 @@ function SabrePage() {
         </div>
         <div className="grow">
           <Vault
+            key={"1"}
             name="sabre"
             vesting={"3 months cliff, then 5 months linear vesting "}
             raisingGoal={600000}
