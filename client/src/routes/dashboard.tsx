@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import { useAccount } from "wagmi";
 import Unstake from "@/components/stake/Form.unstake";
 import { useReadContract } from "wagmi";
-import { SbrStakedByUserAddress, SbrStakedTotal } from "@/lib/web3";
+import { SbrStakedByUserAddress, SbrStakedTotal, maxPurchase } from "@/lib/web3";
+import { multiplierCalculator } from "@/lib/utils";
 import {abi} from "@/config/abi"
 // get user investment and display it on dashboard
 export const Route = createFileRoute("/dashboard")({
@@ -13,21 +14,24 @@ export const Route = createFileRoute("/dashboard")({
 function Dashboard() {
   const [tokensStaked, setTokensStakedByUser] = useState<bigint>(BigInt(0));
   const  [value, setValue] = useState<string>("");
+  const [totalPool, setTotalPool] = useState<bigint>(BigInt(0));
   const {address} = useAccount()
- 
-  // balance staked SBR by User need to fetch
-  const SBRStakedByUser = useReadContract({
-    abi,
-    address : "0x814b58712ba7B2fC356B1dcC71193c651BC02476",
-    functionName : "getStakeAmount",
-    args :  [address as `0x${string}`]
-  })
+  
+  async function SBR_DATA() : Promise<void> {
 
-  // we cannot read the abi that why I have an undefined
-  console.log(SBRStakedByUser.data)
+    const SBRstakedByUser = await SbrStakedByUserAddress(address as `0x${string}`)
+    const TotalSBRStaked = await SbrStakedTotal();
+    
+    // ---- UNCOMMENT THIS FUNCTION WHEN WE HAVE THE STAKEDAMOUT AND TOTALSTAKED AMOUNT WORKING
+    
+    // const multiplier = multiplierCalculator(SBRstakedByUser.data.formatted, TotalSBRStaked.data.formatted)
+    // setTokensStakedByUser(SBRstakedByUser.data.formatted)
+    // setTotalPool(TotalSBRStaked.data.formatted)
+  }
 
   useEffect(() => {
     // refhresh
+    SBR_DATA()
     // setSBR data values to state values
   }, []);
 
@@ -40,11 +44,11 @@ function Dashboard() {
         <p className="text-white font-clash-reg text-2xl">staking</p>
         <Unstake
           value={(e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value)}
-          stakedAmount={Number()}
-          totalStaked={0}
-          apy={0}
+          stakedAmount={Number(tokensStaked)}
+          totalStaked={Number(totalPool)}
+          apy={45.3}
           investmentPower={0}
-          multiplier={0}
+          multiplier={Number()}
         />
       </div>
     </div>

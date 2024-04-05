@@ -3,7 +3,6 @@ import { abi } from "@/config/abi";
 import { config } from "@/config/config";
 import { multiplierCalculator } from "./utils";
 import { IProjectInvested } from "@/types/global";
-import { createClient } from "viem";
 
 const SabreEngineV1: `0x${string}` ="0x814b58712ba7B2fC356B1dcC71193c651BC02476";
 // const S_vault: `0x${string}` = "0x406c1426bafB7Cf2f437BfF366abDc0b99Cfc4Cc";
@@ -72,7 +71,8 @@ export function maxPurchase(
             return investment_Power  = BigInt(0) 
         } 
     investment_Power = Base_investment * power;
-    return investment_Power;
+    return investment_Power
+   
 }
 
 export async function Participants(caller:  `0x${string}`) {
