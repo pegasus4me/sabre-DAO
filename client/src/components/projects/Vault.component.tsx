@@ -8,7 +8,7 @@ import {
     ProjectTag,
 } from "@/atoms";
 import contdown from "@/lib/contdown";
-import { ProgressBar } from "@/lib/contdown";
+import { ProgressBar } from "@/lib/utils";
 /**
  * Investment Power forumla ------------------------------------
  * Investment Power = (User SBR staked / Total SBR staked) * 100

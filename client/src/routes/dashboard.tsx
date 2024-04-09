@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useAccount } from "wagmi";
 import Unstake from "@/components/stake/Form.unstake";
 import { useReadContract } from "wagmi";
-import { SbrStakedByUserAddress, SbrStakedTotal, maxPurchase } from "@/lib/web3";
+import { SbrStakedByUserAddress, SbrStakedTotal, maxPurchase } from "@/lib/contracts/ReadContracts";
 import { multiplierCalculator } from "@/lib/utils";
 import {abi} from "@/config/abi"
 // get user investment and display it on dashboard

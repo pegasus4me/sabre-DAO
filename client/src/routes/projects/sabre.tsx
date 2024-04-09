@@ -2,19 +2,19 @@ import { useState, useEffect, InputHTMLAttributes } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { Vault } from "@/components/projects/Vault.component";
-import { SbrStakedByUserAddress, SbrStakedTotal, maxPurchase, Participants } from "@/lib/web3";
+import { ReadContracts } from "@/lib/contracts/ReadContracts";
 import { useAccount } from "wagmi";
 import { TierTag } from "@/atoms";
 import { Socials } from "@/atoms";
 import logo from "../../assets/Svault_logo.svg";
-import { Invest } from "@/lib/web3";
-import { _date } from "@/lib/utils";
+import { WriteContracts } from "@/lib/contracts/WriteContracts";
+import { _date, maxPurchase } from "@/lib/utils";
 import shadow from "../../assets/shadow.png";
 import {abi} from "@/config/abi"
 import { useBalance } from "wagmi";
 import { getBlockTransactionCount } from '@wagmi/core'
 import { config } from "@/config/config";
-
+// SbrStakedByUserAddress, SbrStakedTotal, maxPurchase, Participants
 const USDC_TESTNET_ADDRESS = "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d"
 
 export const Route = createFileRoute("/projects/sabre")({
@@ -23,7 +23,8 @@ export const Route = createFileRoute("/projects/sabre")({
 
 
 function SabrePage() {
-  
+  const {_getSbrStakedByUserAddress, _getSbrStakedTotal} = new ReadContracts() 
+  const {Invest} = new WriteContracts()
   const [value, setValue] = useState<string>("0");
   const [tokenStakedByUser, setTokenStakedByUser] = useState<bigint>(BigInt(0));
   const [totalTokenStaked, setTotalTokenStaked] = useState<bigint>(BigInt(0));
@@ -50,7 +51,7 @@ function SabrePage() {
 
 
   async function bob() {
-    const toto = await SbrStakedByUserAddress(address as `0x${string}`)
+    const toto = await _getSbrStakedByUserAddress(address as `0x${string}`)
     // console.log("seds",salut_c_moi)
     console.log("ss",toto)
 
@@ -116,7 +117,7 @@ function SabrePage() {
             timestamp_start={1714737419}
             tag={"Live"}
             max_investment={1000}
-            hardCap={800000}
+            hardCap={80}
             totalRaised={Number(SM_USDC_BALANCE.data?.formatted)}
             sbrStaked={Number(tokenStakedByUser)}
             totalStaked={Number(totalTokenStaked)} // Svault deadline day (5 days before the round end date)
@@ -128,7 +129,7 @@ function SabrePage() {
             deadlineDay={_date(1715498536)}
             userBalance={Number(USDT_BALANCE.data?.formatted)}
             participantsNumber={0}
-            invest={() => Invest(BigInt(value), BigInt(0), tokenStakedByUser, totalTokenStaked)}
+            invest={() => Invest(BigInt(value), BigInt(0))}
             price={"0.013"}
             round={"Private"}
             maxCap={""}
