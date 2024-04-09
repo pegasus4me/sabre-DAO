@@ -11,9 +11,21 @@ import {S_vault} from "../src/S_vault.sol";
 import {SabreDAOStaking} from "../src/SabreDAOStaking.sol";
 
 contract deploySabreDAOEngine is Script {
-    address[] public proposer;
+    struct DeploymentResult {
+        SabreDAO sabreDAO;
+        helperConfig helperConfig;
+        SabreDAOEngine sabreDAOEngine;
+        S_vault sVault;
+        TimeLock timeLock;
+        SabreDAOStaking sabreDAOStaking;
+    }
 
-    function run() external returns (SabreDAO, helperConfig, SabreDAOEngine, S_vault, TimeLock) {
+    address[] public proposer;
+    // uint public N_compoundIntrest = 12;
+    // uint public R_annualRate = 20;
+    uint256 public _apy = 10;
+
+    function run() external returns (DeploymentResult memory) {
         helperConfig HelperConfig = new helperConfig();
         (
             uint256 _proposalFee,
@@ -27,17 +39,23 @@ contract deploySabreDAOEngine is Script {
 
         SabreDAO SBRToken = new SabreDAO(msg.sender);
         S_vault SBRVault = new S_vault(address(SBRToken));
-        
-        // SabreDAOStaking SBRStaking = new SabreDAOStaking();
+
+        SabreDAOStaking SBRStaking = new SabreDAOStaking(address(SBRToken), _apy);
         SabreDAOEngine SBREngine =
             new SabreDAOEngine(_proposalFee, _votingFee, _timePoint, _proposalID, address(SBRToken));
-        TimeLock timeLock = new TimeLock(30, proposer, proposer);
-
+        TimeLock timelock = new TimeLock(30, proposer, proposer);
 
         // SBRToken.mintToken();
         SBRToken.transferOwnership(address(SBREngine));
         vm.stopBroadcast();
-        return (SBRToken, HelperConfig, SBREngine, SBRVault, timeLock);
-
+        // return (SBRToken, HelperConfig, SBREngine, SBRVault, timeLock);
+        return DeploymentResult({
+            sabreDAO: SBRToken,
+            helperConfig: HelperConfig,
+            sabreDAOEngine: SBREngine,
+            sVault: SBRVault,
+            timeLock: timelock,
+            sabreDAOStaking: SBRStaking
+        });
     }
 }

@@ -498,7 +498,8 @@ contract SabreDAOEngine is Ownable, ISabreDAOEngine, ReentrancyGuard {
     function getStakeAmount(address staker) public view returns (uint256) {
         return SBRSStaking._getStake(staker);
     }
-    function getTotalStakedAmount () public view returns (uint256) {
+
+    function getTotalStakedAmount() public view returns (uint256) {
         return SBRSStaking._getTotalStakedAmount();
     }
     //GVPRO

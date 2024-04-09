@@ -1,6 +1,3 @@
-// // SPDX-License-Identifier: MIT
-// pragma solidity ^0.8.20;
-
 // import {SabreDAOEngine} from "../src/SabreDAOEngine.sol";
 // import {Test} from "../lib/forge-std/src/Test.sol";
 // import {deploySabreDAOEngine} from "../script/deploySabreDAOEngine.s.sol";
@@ -12,7 +9,6 @@
 // import {S_vault} from "../src/S_vault.sol";
 // import {ERC20ForceApproveMock} from "../lib/openzeppelin-contracts/contracts/mocks/token/ERC20ForceApproveMock.sol";
 // import {ERC20Mock} from "../lib/openzeppelin-contracts/contracts/mocks/token/ERC20Mock.sol";
-
 
 // contract testSabreDAOEngine is Test {
 //     deploySabreDAOEngine deployer;
@@ -28,10 +24,6 @@
 //     uint256 _votingFee;
 //     uint256 _timePoint;
 //     uint256 _proposalID;
-    
-
-    
-
 
 //     address public USER = makeAddr("user");
 
@@ -46,13 +38,6 @@
 //     }
 //     function testBuyToken() public {
 
-
 //     }
-
-
-
-
-
-
 
 // }
