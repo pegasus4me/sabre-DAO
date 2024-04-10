@@ -50,14 +50,14 @@ function SabrePage() {
   })
 
 
-  async function bob() {
-    const toto = await _getSbrStakedByUserAddress(address as `0x${string}`)
-    // console.log("seds",salut_c_moi)
-    console.log("ss",toto)
+  // async function bob() {
+  //   const toto = await _getSbrStakedByUserAddress(address as `0x${string}`)
+  //   // console.log("seds",salut_c_moi)
+  //   console.log("ss",toto)
 
-  }   
+  // }   
   
-  bob()
+  // bob()
  
 
 
