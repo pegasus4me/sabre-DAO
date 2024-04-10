@@ -26,8 +26,3 @@ export default function contdown(timestamp: number, currentDate: Date): number[]
 
     return date
 }
-
-// 0 - 1  0% to 100%    
-export function ProgressBar(hardcap : number, raised : number): number{
-    return raised / hardcap * 100
-}

@@ -47,7 +47,7 @@ export interface IVault extends Pick<Ivault, "tag" | "price" | "round" | "maxCap
   invest : () => Promise<void | string>,
 }
 
-
+export type Hash = `0x${string}`;
 export interface IProjectInvested {
   userAddress  : `0x${string}`
   projectName: string;
@@ -55,4 +55,22 @@ export interface IProjectInvested {
   amountInvested : number;
   NumberOfTokensGet : number;
   isVested : boolean;
+}
+
+
+export interface SWriteContracts {
+  Invest(value : bigint, proposalId : bigint, base_investment : bigint , tokenStakedByUser? : bigint, totalTokenStaked? : bigint) : Promise<void | string>; 
+  Stake(amount : bigint) : Promise<void | string>; 
+  Unstake(amount : bigint, caller : Hash) : Promise<void | string>;
+  ClaimReward() : Promise<void | string>;
+  ClaimAndUnstake(amountToUnstake : bigint) : Promise<void | string>;
+  s_vaultRefund(ProsalId : bigint, amountToRefound : bigint) : Promise<void | string>;
+}
+
+export interface SReadContracts {
+  _getSbrStakedByUserAddress(caller : Hash) : Promise<bigint>; 
+  _getSbrStakedTotal() : Promise<bigint>; 
+  _getReturnUSERPROFILE(ProsalId : bigint, caller : Hash) : Promise<bigint>; 
+  _getCurrentVaultStatus() : Promise<number>; 
+  _getgetVaultDuration(ProsalId : bigint) : Promise<bigint>; 
 }
