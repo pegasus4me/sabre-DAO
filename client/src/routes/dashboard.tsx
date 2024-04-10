@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useAccount } from "wagmi";
 import Unstake from "@/components/stake/Form.unstake";
 import { useReadContract } from "wagmi";
-import { SbrStakedByUserAddress, SbrStakedTotal, maxPurchase } from "@/lib/contracts/ReadContracts";
+import { ReadContracts } from "@/lib/contracts/ReadContracts";
 import { multiplierCalculator } from "@/lib/utils";
 import {abi} from "@/config/abi"
 // get user investment and display it on dashboard
@@ -18,9 +18,9 @@ function Dashboard() {
   const {address} = useAccount()
   
   async function SBR_DATA() : Promise<void> {
-
-    const SBRstakedByUser = await SbrStakedByUserAddress(address as `0x${string}`)
-    const TotalSBRStaked = await SbrStakedTotal();
+    const {_getSbrStakedByUserAddress, _getSbrStakedTotal} = new ReadContracts() 
+    const SBRstakedByUser = await _getSbrStakedByUserAddress(address as `0x${string}`)
+    const TotalSBRStaked = await _getSbrStakedTotal();
     
     // ---- UNCOMMENT THIS FUNCTION WHEN WE HAVE THE STAKEDAMOUT AND TOTALSTAKED AMOUNT WORKING
     
