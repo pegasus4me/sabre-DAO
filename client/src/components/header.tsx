@@ -48,7 +48,7 @@ export default function Header(): JSX.Element {
           </div>
 
           <div
-            className={`absolute ${open ? "left-0 opacity-100 backdrop-filter backdrop-blur-lg" : "-left-[1500px] opacity-0 lg:opacity-100"} transition-all duration-300 ease w-full top-[50px] bg-black/80 flex flex-col lg:static lg:flex lg:flex-row lg:bg-transparent`}
+            className={`absolute ${open ? "left-0 opacity-100 backdrop-filter backdrop-blur-lg" : "-left-[1500px] opacity-0 lg:opacity-100"} transition-all duration-300 ease w-full top-[70px] bg-black/80 flex flex-col lg:static lg:flex lg:flex-row lg:bg-transparent`}
           >
             {routes.map((el, idx) => (
               <Link

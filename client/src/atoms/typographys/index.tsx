@@ -1,4 +1,3 @@
-import { cn } from "@/lib/utils";
 import { MdArrowOutward } from "react-icons/md";
 import { TProjectTag } from "@/types/global";
 import { _TierTag } from "@/types/global";
@@ -10,7 +9,7 @@ interface ITypographyProps {
 export const Title = ({ text, css }: ITypographyProps) => {
   return (
     <h2
-      className={`font-clash-bold font-bold text-5xl lg:text-6xl text-white ${css}`}
+      className={`font-clash-med text-5xl lg:text-7xl text-white leading-tight ${css}`}
     >
       {text}
     </h2>
@@ -36,7 +35,7 @@ export const SubTitleVariant = ({ text, css }: ITypographyProps) => {
 
 export const Paragraph = ({ text, css }: ITypographyProps) => {
   return (
-    <p className={`font-clash-reg text-xs md:text-sm text-white ${css}`}>
+    <p className={`font-clash-light text-xs md:text-sm text-white ${css}`}>
       {text}
     </p>
   );

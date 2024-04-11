@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import illustration from "../../assets/presentation.png";
-import vaultLogo from "@/assets/vault_logo.svg";
 import Filter from "../../components/projects/filter.component";
 import { SubTitle, Title } from "@/atoms";
 import ProjectsComponent from "@/components/projects/projects_component";
@@ -17,6 +16,7 @@ export const Route = createFileRoute("/projects/")({
 
 export default function Projects() {
 return (
+    <div className="my-32 w-[90%] max-w-[1440px] mx-auto">
         <section className="w-full my-8 flex flex-col space-y-12">
             <div className="border-b border-[#454545] md:py-16">
                 <div className="flex flex-col space-y-12 md:space-y-0 md:flex-row md:justify-between md:items-center">
@@ -56,5 +56,6 @@ return (
                 <ProjectsComponent />
             </section>
         </section>
+        </div>
   );
 }
