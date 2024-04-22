@@ -3,6 +3,7 @@ import { abi } from "@/config/abi";
 import { config } from "@/config/config";
 import { SReadContracts } from "@/types/global";
 import { contractAddresses } from "../utils";
+
 export class ReadContracts implements SReadContracts {
   async _getSbrStakedByUserAddress(caller: `0x${string}`): Promise<bigint> {
     try {

@@ -22,7 +22,7 @@ const config = {
       borderLine: "#DEE2E9",
       errorBg: "#ffebee",
       error: "#e57373",
-      green: "#30D440"
+      green: "#30D440",
     },
     container: {
       center: true,
@@ -66,6 +66,16 @@ const config = {
         "5xl": "2.5rem",
         "6xl": "3.4rem",
         "7xl": "4rem",
+      },
+
+      backgroundImage: {
+        "home-hero": "url('/door.jpg')",
+        "home-work": "url('/work.png')",
+      },
+
+      gridTemplateColumns: {
+        "work_grid": "repeat(auto-fill, minmax(300px, 1fr))",
+        "value_grid": "repeat(auto-fill, minmax(300px, 450px))",
       },
     },
 
